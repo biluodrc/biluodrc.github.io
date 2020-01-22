@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   
-  <title>Django-1 | Biluo</title>
+  <title>Django-3 | Biluo</title>
   
   
 
@@ -293,8 +293,8 @@
         
   
     <h1 class="title">
-      <a href="/2020/01/19/Django-1/">
-        Django-1
+      <a href="/2020/01/22/Django-3/">
+        Django-3
       </a>
     </h1>
   
@@ -325,7 +325,7 @@
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-calendar-alt" aria-hidden="true"></i>
-    <p>2020-01-19</p>
+    <p>2020-01-22</p>
   </a>
 </div>
 
@@ -383,28 +383,44 @@
 
     <section class="article typo">
       <div class="article-entry" itemprop="articleBody">
-        <h2 id="•-创建项目"><a href="#•-创建项目" class="headerlink" title="• 创建项目"></a>• 创建项目</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">django-admin startproject mysite</span><br></pre></td></tr></table></figure>
-<p>创建了mysite目录：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysite&#x2F;</span><br><span class="line">    manage.py #一个命令行实用程序，可让您以各种方式与该Django项目进行交互。</span><br><span class="line">    mysite&#x2F;</span><br><span class="line">        __init__.py</span><br><span class="line">        settings.py #此Django项目的设置&#x2F;配置。</span><br><span class="line">        urls.py #此Django项目的URL声明；Django支持的网站的“目录”。</span><br><span class="line">        asgi.py</span><br><span class="line">        wsgi.py</span><br></pre></td></tr></table></figure>
+        <h2 id="•-视图"><a href="#•-视图" class="headerlink" title="• 视图"></a>• 视图</h2><p><strong>视图其实是视图函数的简称</strong>，视图是Django应用程序中网页的“类型”，通常具有特定功能并具有特定模板。<br>在Django中，网页和其他内容是通过视图传递的。每个视图均由Python函数（或方法（对于基于类的视图而言））表示。Django将通过检查所请求的URL（准确地说，是域名之后的URL部分）来选择视图。</p>
+<h2 id="•-URL"><a href="#•-URL" class="headerlink" title="• URL"></a>• URL</h2><p><strong>URL即统一资源定位符</strong>，是每一个信息资源都有统一的且在网上唯一的地址。<br><strong>URLconfs即URL模式</strong>，是URL的一般形式Django提供了更加优雅的URL模式，例如：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/newsarchive/<span class="tag">&lt;<span class="name">year</span>&gt;</span>/<span class="tag">&lt;<span class="name">month</span>&gt;</span>/</span><br></pre></td></tr></table></figure>
 
-<h2 id="•-运行服务器"><a href="#•-运行服务器" class="headerlink" title="• 运行服务器"></a>• 运行服务器</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Python manage.py runserver</span><br></pre></td></tr></table></figure>
-<p>在浏览器中搜索<a href="http://127.0.0.1:8000/，就能看到Django火箭：" target="_blank" rel="noopener">http://127.0.0.1:8000/，就能看到Django火箭：</a><br><img src="https://img-blog.csdnimg.cn/20200105125207937.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNTc1OTI2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<h2 id="•-创建应用程序（polls应用）"><a href="#•-创建应用程序（polls应用）" class="headerlink" title="• 创建应用程序（polls应用）"></a>• 创建应用程序（polls应用）</h2><p>项目和应用之间有什么区别？<strong>应用程序是执行某项操作的Web应用程序</strong>，例如Weblog系统，公共记录数据库或小型民意调查应用程序。<strong>项目是特定网站的配置和应用程序的集合。一个项目可以包含多个应用程序。一个应用程序可以在多个项目中。</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py startapp polls</span><br></pre></td></tr></table></figure>
-<p>创建了polls目录</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">polls&#x2F;</span><br><span class="line">    __init__.py</span><br><span class="line">    admin.py</span><br><span class="line">    apps.py</span><br><span class="line">    migrations&#x2F;</span><br><span class="line">        __init__.py</span><br><span class="line">    models.py</span><br><span class="line">    tests.py</span><br><span class="line">    views.py</span><br></pre></td></tr></table></figure>
+<h2 id="•-添加更多的视图"><a href="#•-添加更多的视图" class="headerlink" title="• 添加更多的视图"></a>• 添加更多的视图</h2><p>更改<em>views.py</em>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">detail</span><span class="params">(request, question_id)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> HttpResponse(<span class="string">"You're looking at question %s."</span> % question_id)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">results</span><span class="params">(request, question_id)</span>:</span></span><br><span class="line">    response = <span class="string">"You're looking at the results of question %s."</span></span><br><span class="line">    <span class="keyword">return</span> HttpResponse(response % question_id)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">vote</span><span class="params">(request, question_id)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> HttpResponse(<span class="string">"You're voting on question %s."</span> % question_id)</span><br></pre></td></tr></table></figure>
 
-<h2 id="•-第一个视图函数"><a href="#•-第一个视图函数" class="headerlink" title="• 第一个视图函数"></a>• 第一个视图函数</h2><p>每一个请求的url地址，都对应着一个函数，叫视图函数，由视图函数处理请求后，再返回页面内容给浏览器显示。<br>在<strong>polls/views.py</strong>中添加代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from django.http import HttpResponse</span><br><span class="line"></span><br><span class="line">def index(request):</span><br><span class="line">        Return HttpResponse(&quot;Hello,world.You&#39;reatthepollsindex.&quot;)</span><br></pre></td></tr></table></figure>
+<p>并更改<em>polls.urls.py</em>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.urls <span class="keyword">import</span> path</span><br><span class="line"><span class="keyword">from</span> . <span class="keyword">import</span> views</span><br><span class="line">urlpatterns = [</span><br><span class="line">    <span class="comment"># ex: /polls/</span></span><br><span class="line">    path(<span class="string">''</span>, views.index, name=<span class="string">'index'</span>),</span><br><span class="line">    <span class="comment"># ex: /polls/5/</span></span><br><span class="line">    path(<span class="string">'&lt;int:question_id&gt;/'</span>, views.detail, name=<span class="string">'detail'</span>),</span><br><span class="line">    <span class="comment"># ex: /polls/5/results/</span></span><br><span class="line">    path(<span class="string">'&lt;int:question_id&gt;/results/'</span>, views.results, name=<span class="string">'results'</span>),</span><br><span class="line">    <span class="comment"># ex: /polls/5/vote/</span></span><br><span class="line">    path(<span class="string">'&lt;int:question_id&gt;/vote/'</span>, views.vote, name=<span class="string">'vote'</span>),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 
-<h2 id="•-创建URL关系"><a href="#•-创建URL关系" class="headerlink" title="• 创建URL关系"></a>• 创建URL关系</h2><p>polls目录中创建URLconf，即创建一个urls.py文件，包含如下代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from django.urls import path</span><br><span class="line"></span><br><span class="line">from . import views</span><br><span class="line"></span><br><span class="line">urlpatterns&#x3D;[</span><br><span class="line">path(&#39;&#39;,  views.index, name&#x3D;&#39;index&#39;),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-<p>在项目之下的urls.py文件（mysite/urls.py）中加入代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from django.contrib import admin</span><br><span class="line">from django.urls import include,path</span><br><span class="line"></span><br><span class="line">urlpatterns&#x3D;[</span><br><span class="line">path(&#39;polls&#x2F;&#39;,include(&#39;polls.urls&#39;)),</span><br><span class="line">path(&#39;admin&#x2F;&#39;,admin.site.urls),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-<p><strong>重点：项目和应用之下urls.py文件的不同</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 项目下的urls.py</span><br><span class="line">urlpatterns &#x3D; [</span><br><span class="line">    ...</span><br><span class="line">    # 包含应用下的urls.py文件</span><br><span class="line">    url(正则表达式, include(&#39;应用名.urls&#39;))</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>根据输入的URL地址，<strong>通过遍历的方式寻找匹配的URL模式串</strong>，并调用相对应的视图函数，相应相对应的网页。<br>比如说，当有人从网站请求页面时，例如“ / polls / 34 /”，Django将加载<em>mysite.urls</em>的Python模块，因为该<em>ROOT_URLCONF</em>设置指向该模块 。它找到名为的变量urlpatterns并按顺序遍历模式。在找到匹配项之后’polls/‘，它将剥离匹配的文本（”polls/“），并将其余文本–发送 “34/“到’polls.urls’URLconf进行进一步处理。在那里匹配’<a href="int:question_id">int:question_id</a>/‘，从而导致对detail()视图的调用，如下所示：<br>detail(request=<HttpRequest object>, question_id=34)</p>
+<h2 id="•-编写更强大的视图"><a href="#•-编写更强大的视图" class="headerlink" title="• 编写更强大的视图"></a>• 编写更强大的视图</h2><p>每个视图负责执行以下两项操作之一：<strong>返回HttpResponse包含所请求页面内容的对象，或者引发诸如之类的异常Http404</strong>。<br>HttpResponse需要自己对其进行填充，而HttpRequest是Django自己生成。<br>视图可以从数据库中读取记录，也可以使用Django等模板系统，也可以不使用第三方Python模板系统。它还可以使用所需的任何Python库生成PDF文件，输出XML，或即时创建ZIP文件。<br>在<em>view.py</em>添加代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> .models <span class="keyword">import</span> Question</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">(request)</span>:</span></span><br><span class="line">    latest_question_list = Question.objects.order_by(<span class="string">'-pub_date'</span>)[:<span class="number">5</span>]</span><br><span class="line">    output = <span class="string">', '</span>.join([q.question_text <span class="keyword">for</span> q <span class="keyword">in</span> latest_question_list])</span><br><span class="line">    <span class="keyword">return</span> HttpResponse(output)</span><br><span class="line">    <span class="comment"># Leave the rest of the views (detail, results, vote) unchanged</span></span><br></pre></td></tr></table></figure>
+<h2 id="•-将模板与视图创建的硬编码分开"><a href="#•-将模板与视图创建的硬编码分开" class="headerlink" title="• 将模板与视图创建的硬编码分开"></a>• 将模板与视图创建的硬编码分开</h2><p>首先，在目录templates中创建一个polls目录。Django将在那里寻找模板。<br>您的项目TEMPLATES置描述了Django如何加载和呈现模板。默认设置文件配置一个DjangoTemplates 后端，其APP_DIRS选项设置为 True。按照惯例DjangoTemplates，在每个文件夹中都会寻找一个“模板”子目录INSTALLED_APPS。<br>在<em>polls/templates/polls/</em>添加一个模板：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;% if latest_question_list %&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">    &#123;% for question in latest_question_list %&#125;</span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/polls/&#123;&#123; question.id &#125;&#125;/"</span>&gt;</span>&#123;&#123; question.question_text &#125;&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    &#123;% endfor %&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">&#123;% else %&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>No polls are available.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># 应用下的urls.py</span><br><span class="line">urlpatterns &#x3D; [</span><br><span class="line"> </span><br><span class="line">   # 该path()函数传递了四个参数，两个是必需的 route和view，</span><br><span class="line">   # 以及两个可选的kwargs和name。</span><br><span class="line">   path(route , view , kwargs , name),</span><br><span class="line">        # route：route是包含URL模式的字符串。在处理请求时，</span><br><span class="line">        # Django从第一个模式开始，urlpatterns然后沿列表向下移动，</span><br><span class="line">        # 将请求的URL与每个模式进行比较，直到找到匹配的URL。</span><br><span class="line">        # view：当Django找到匹配的模式时，使用HttpRequest对象作为第一个参数，</span><br><span class="line">        # 并将路线中所有“捕获的”值作为关键字参数，调用指定的view函数。</span><br><span class="line">        # name：命名URL可以使您在Django中的其他地方（尤其是在模板内部）</span><br><span class="line">        # 明确地引用它。这项强大的功能可让您仅触摸单个文件</span><br><span class="line">        # 即可对项目的URL模式进行全局更改。</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>现在运行服务器之后，可以子项/polls来加载一个“最新消息”列表。</p>
+<h2 id="•-快捷方式"><a href="#•-快捷方式" class="headerlink" title="• 快捷方式"></a>• 快捷方式</h2><p>加载模板，填充上下文并使用渲染后的模板的结果返回对象HttpResponse是一种非常常见的用法。<br>同时，Django提供了一种快捷方式。重写index()：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span><br><span class="line"><span class="keyword">from</span> .models <span class="keyword">import</span> Question</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">(request)</span>:</span></span><br><span class="line">    latest_question_list = Question.objects.order_by(<span class="string">'-pub_date'</span>)[:<span class="number">5</span>]</span><br><span class="line">    context = &#123;<span class="string">'latest_question_list'</span>: latest_question_list&#125;</span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">'polls/index.html'</span>, context)</span><br></pre></td></tr></table></figure>
+<p>该render()函数将<strong>请求对象作为其第一个参数，将模板名称作为其第二个参数，并将字典作为其可选的第三个参数</strong>。它返回使用HttpResponse 给定上下文呈现的给定模板的对象。</p>
+<h2 id="•-404错误"><a href="#•-404错误" class="headerlink" title="• 404错误"></a>• 404错误</h2><p>在<em>views.py</em>中添加代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.http <span class="keyword">import</span> Http404</span><br><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> render</span><br><span class="line"><span class="keyword">from</span> .models <span class="keyword">import</span> Question</span><br><span class="line"><span class="comment"># ...</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">detail</span><span class="params">(request, question_id)</span>:</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        question = Question.objects.get(pk=question_id)</span><br><span class="line">    <span class="keyword">except</span> Question.DoesNotExist:</span><br><span class="line">        <span class="keyword">raise</span> Http404(<span class="string">"Question does not exist"</span>)</span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">'polls/detail.html'</span>, &#123;<span class="string">'question'</span>: question&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>为了快速使示例正常工作，对应模板<em>polls/templates/polls/detail.html</em><br>中只添加：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; question &#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>现在运行服务器，可以看到更完整的polls网页  </p>
+<h2 id="•-404的快捷方式"><a href="#•-404的快捷方式" class="headerlink" title="• 404的快捷方式"></a>• 404的快捷方式</h2><p>重写detail()函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.shortcuts <span class="keyword">import</span> get_object_or_404, render</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> .models <span class="keyword">import</span> Question</span><br><span class="line"><span class="comment"># ...</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">detail</span><span class="params">(request, question_id)</span>:</span></span><br><span class="line">    question = get_object_or_404(Question, pk=question_id)</span><br><span class="line">    <span class="keyword">return</span> render(request, <span class="string">'polls/detail.html'</span>, &#123;<span class="string">'question'</span>: question&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="•-使用模板系统"><a href="#•-使用模板系统" class="headerlink" title="• 使用模板系统"></a>• 使用模板系统</h2><p><em>polls/detail.html</em>改写为：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>&#123;&#123; question.question_text &#125;&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">&#123;% for choice in question.choice_set.all %&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span>&#123;&#123; choice.choice_text &#125;&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">&#123;% endfor %&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>模板系统使用点查找语法来访问变量属性。在的示例中，首先Django在对象上进行字典查找。如果失败，它将尝试属性查找-在这种情况下可以工作。如果属性查找失败，它将尝试进行列表索引查找。</p>
+<h2 id="•-命名空间URL名称"><a href="#•-命名空间URL名称" class="headerlink" title="• 命名空间URL名称"></a>• 命名空间URL名称</h2><p>在实际的Django项目中，可能有很多个应用程序，Django如何区分它们之间的URL名称呢？答案是将名称空间添加到URLconf中。<br>在polls/urls.py中添加app_name以设置为应用程序名称空间：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.urls <span class="keyword">import</span> pat</span><br><span class="line"><span class="keyword">from</span> . <span class="keyword">import</span> views</span><br><span class="line">app_name = <span class="string">'polls'</span></span><br><span class="line">urlpatterns = [</span><br><span class="line">    path(<span class="string">''</span>, views.index, name=<span class="string">'index'</span>),</span><br><span class="line">    path(<span class="string">'&lt;int:question_id&gt;/'</span>, views.detail, name=<span class="string">'detail'</span>),</span><br><span class="line">    path(<span class="string">'&lt;int:question_id&gt;/results/'</span>, views.results, name=<span class="string">'results'</span>),</span><br><span class="line">    path(<span class="string">'&lt;int:question_id&gt;/vote/'</span>, views.vote, name=<span class="string">'vote'</span>),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>这样可以区分多个应用程序的URL名称。</p>
 
       </div>
       
@@ -417,10 +433,10 @@
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-01-19T20:59:47+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-01-22T22:11:18+08:00">
   <a class='notlink'>
     <i class="fas fa-clock" aria-hidden="true"></i>
-    <p>更新于 2020年1月19日</p>
+    <p>更新于 2020年1月22日</p>
   </a>
 </div>
 
@@ -442,7 +458,7 @@
       
         <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer"
           
-          href="http://connect.qq.com/widget/shareqq/index.html?url=http://codebiluo.cn/2020/01/19/Django-1/&title=Django-1 | Biluo&summary="
+          href="http://connect.qq.com/widget/shareqq/index.html?url=http://codebiluo.cn/2020/01/22/Django-3/&title=Django-3 | Biluo&summary="
           
           >
           
@@ -454,7 +470,7 @@
       
         <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer"
           
-          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://codebiluo.cn/2020/01/19/Django-1/&title=Django-1 | Biluo&summary="
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://codebiluo.cn/2020/01/22/Django-3/&title=Django-3 | Biluo&summary="
           
           >
           
@@ -466,7 +482,7 @@
       
         <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer"
           
-          href="http://service.weibo.com/share/share.php?url=http://codebiluo.cn/2020/01/19/Django-1/&title=Django-1 | Biluo&summary="
+          href="http://service.weibo.com/share/share.php?url=http://codebiluo.cn/2020/01/22/Django-3/&title=Django-3 | Biluo&summary="
           
           >
           
@@ -490,14 +506,15 @@
       
           <div class="prev-next">
               
-                  <section class="prev">
-                      <span class="art-item-left">
-                          <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;上一页</h6>
+              
+                  <section class="next">
+                      <span class="art-item-right" aria-hidden="true">
+                          <h6>下一页&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
                           <h4>
                               <a href="/2020/01/19/Django-2/" rel="prev" title="Django-2">
-                                
-                                    Django-2
-                                
+                                  
+                                      Django-2
+                                  
                               </a>
                           </h4>
                           
@@ -508,7 +525,6 @@
                           
                       </span>
                   </section>
-              
               
           </div>
       
@@ -534,7 +550,7 @@
 
   <script>
     window.subData = {
-      title: 'Django-1',
+      title: 'Django-3',
       tools: true
     }
   </script>
@@ -620,7 +636,7 @@
 </header>
 
     <div class='content pure'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#•-创建项目"><span class="toc-text">• 创建项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#•-运行服务器"><span class="toc-text">• 运行服务器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#•-创建应用程序（polls应用）"><span class="toc-text">• 创建应用程序（polls应用）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#•-第一个视图函数"><span class="toc-text">• 第一个视图函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#•-创建URL关系"><span class="toc-text">• 创建URL关系</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#•-视图"><span class="toc-text">• 视图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#•-URL"><span class="toc-text">• URL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#•-添加更多的视图"><span class="toc-text">• 添加更多的视图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#•-编写更强大的视图"><span class="toc-text">• 编写更强大的视图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#•-将模板与视图创建的硬编码分开"><span class="toc-text">• 将模板与视图创建的硬编码分开</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#•-快捷方式"><span class="toc-text">• 快捷方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#•-404错误"><span class="toc-text">• 404错误</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#•-404的快捷方式"><span class="toc-text">• 404的快捷方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#•-使用模板系统"><span class="toc-text">• 使用模板系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#•-命名空间URL名称"><span class="toc-text">• 命名空间URL名称</span></a></li></ol>
     </div>
   </section>
 
