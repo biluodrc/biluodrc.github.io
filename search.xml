@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>LeetCode-1</title>
+      <link href="/2020/01/23/leetcode/LeetCode-1/"/>
+      <url>/2020/01/23/leetcode/LeetCode-1/</url>
+      
+        <content type="html"><![CDATA[<p>问题可以转换为，已有一个ele（为数组中的任意元素），需要在数组中寻找另一个元素等于target-ele</p><h3 id="1、暴力遍历法"><a href="#1、暴力遍历法" class="headerlink" title="1、暴力遍历法"></a>1、暴力遍历法</h3><p>最直观的想法遍历每一个元素，再对该元素进行遍历，查看是否有满足条件的其他元素，使得他们两的加和为target。  </p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    vector&lt;int&gt; twoSum(vector&lt;int&gt;&amp; nums, int target) &#123;</span><br><span class="line">        <span class="keyword">for</span> (int i = <span class="number">0</span> ; i &lt; nums.size() ; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (int j = i+<span class="number">1</span> ; j &lt; nums.size() ; ++j)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (nums[i]+nums[j] == target)</span><br><span class="line">                    <span class="keyword">return</span> &#123;i , j&#125;;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="number">-1</span> , <span class="number">-1</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><p>时间复杂度：O(n^2)<br>空间复杂度：O(1)</p><h3 id="2、一遍hash"><a href="#2、一遍hash" class="headerlink" title="2、一遍hash"></a>2、一遍hash</h3><p>这个方法的想法主要是利用哈希表来进行查找加速。<br>遍历数组元素ele，将ele放入哈希表中（ele值作为外键，ele下标作为內键），同时判断target-ele是否在哈希表中：<br>如果在，那么搜索结束，直接返回；<br>如果不在，继续遍历，直到结尾；</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    vector&lt;int&gt; twoSum(vector&lt;int&gt;&amp; nums, int target) &#123;</span><br><span class="line">        map&lt;int, int&gt; m;</span><br><span class="line">        <span class="keyword">for</span> (int i = <span class="number">0</span> ; i &lt; nums.size() ; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (m.count(target-nums[i]) == <span class="number">1</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">return</span> &#123;m[target-nums[i]] , i&#125;;</span><br><span class="line">            &#125;</span><br><span class="line">            m[nums[i]] = i;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="number">-1</span>, <span class="number">-1</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><p>时间复杂度：O(n)<br>空间复杂度：O(n)</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 刷题 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> LeetCode </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Django-3</title>
       <link href="/2020/01/22/Django-3/"/>
       <url>/2020/01/22/Django-3/</url>
