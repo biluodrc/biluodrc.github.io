@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   
-  <title>Django-1 | Biluo</title>
+  <title>Django-2 | Biluo</title>
   
   
 
@@ -293,8 +293,8 @@
         
   
     <h1 class="title">
-      <a href="/2020/01/19/Django-1/">
-        Django-1
+      <a href="/2020/01/19/Django/Django-2/">
+        Django-2
       </a>
     </h1>
   
@@ -383,28 +383,41 @@
 
     <section class="article typo">
       <div class="article-entry" itemprop="articleBody">
-        <h2 id="•-创建项目"><a href="#•-创建项目" class="headerlink" title="• 创建项目"></a>• 创建项目</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">django-admin startproject mysite</span><br></pre></td></tr></table></figure>
-<p>创建了mysite目录：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysite&#x2F;</span><br><span class="line">    manage.py #一个命令行实用程序，可让您以各种方式与该Django项目进行交互。</span><br><span class="line">    mysite&#x2F;</span><br><span class="line">        __init__.py</span><br><span class="line">        settings.py #此Django项目的设置&#x2F;配置。</span><br><span class="line">        urls.py #此Django项目的URL声明；Django支持的网站的“目录”。</span><br><span class="line">        asgi.py</span><br><span class="line">        wsgi.py</span><br></pre></td></tr></table></figure>
+        <h2 id="•-数据库设置"><a href="#•-数据库设置" class="headerlink" title="• 数据库设置"></a>• 数据库设置</h2><p>默认使用SQLite，相关的设置都在<em>setting.py</em>文件中进行。</p>
+<p><em>setting,py</em>中还有其他设置：<br>INSTALLED_APPS文件顶部的设置。该名称包含在此Django实例中激活的所有Django应用程序的名称。其中包含一些默认的应用程序。不需要时可以在INSTALLED_APPS中删去。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py migrate</span><br></pre></td></tr></table></figure>
 
-<h2 id="•-运行服务器"><a href="#•-运行服务器" class="headerlink" title="• 运行服务器"></a>• 运行服务器</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Python manage.py runserver</span><br></pre></td></tr></table></figure>
-<p>在浏览器中搜索<a href="http://127.0.0.1:8000/，就能看到Django火箭：" target="_blank" rel="noopener">http://127.0.0.1:8000/，就能看到Django火箭：</a><br><img src="https://img-blog.csdnimg.cn/20200105125207937.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNTc1OTI2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<h2 id="•-创建应用程序（polls应用）"><a href="#•-创建应用程序（polls应用）" class="headerlink" title="• 创建应用程序（polls应用）"></a>• 创建应用程序（polls应用）</h2><p>项目和应用之间有什么区别？<strong>应用程序是执行某项操作的Web应用程序</strong>，例如Weblog系统，公共记录数据库或小型民意调查应用程序。<strong>项目是特定网站的配置和应用程序的集合。一个项目可以包含多个应用程序。一个应用程序可以在多个项目中。</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py startapp polls</span><br></pre></td></tr></table></figure>
-<p>创建了polls目录</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">polls&#x2F;</span><br><span class="line">    __init__.py</span><br><span class="line">    admin.py</span><br><span class="line">    apps.py</span><br><span class="line">    migrations&#x2F;</span><br><span class="line">        __init__.py</span><br><span class="line">    models.py</span><br><span class="line">    tests.py</span><br><span class="line">    views.py</span><br></pre></td></tr></table></figure>
+<p>该migrate命令将查看该INSTALLED_APPS设置，并根据<em>mysite/settings.py</em>文件中的数据库设置以及应用程序随附的数据库迁移来创建任何必要的数据库表。</p>
+<h2 id="•-创建模型"><a href="#•-创建模型" class="headerlink" title="• 创建模型"></a>• 创建模型</h2><p>模型是相关数据的唯一、确定的事实来源。它包含要存储数据的基本字段和行为。也就是一个包含各种属性（数据）和方法（行为）的类。<br>比如说：<br>在民意调查应用中，我们将创建两个模型：Question和Choice。Question有一个问题和出版日期。Choice有两个字段：选择的文本和投票提示。每个Choice都与关联Question。</p>
+<p>在<em>polls/models.py</em>文件中添加代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from django.db import models</span><br><span class="line">class Question(models.Model):</span><br><span class="line">    question_text &#x3D; models.CharField(max_length&#x3D;200)</span><br><span class="line">    pub_date &#x3D; models.DateTimeField(&#39;date published&#39;)</span><br><span class="line">class Choice(models.Model):</span><br><span class="line">    question &#x3D; models.ForeignKey(Question, on_delete&#x3D;models.CASCADE)</span><br><span class="line">    choice_text &#x3D; models.CharField(max_length&#x3D;200)</span><br><span class="line">    votes &#x3D; models.IntegerField(default&#x3D;0)</span><br></pre></td></tr></table></figure>
 
-<h2 id="•-第一个视图函数"><a href="#•-第一个视图函数" class="headerlink" title="• 第一个视图函数"></a>• 第一个视图函数</h2><p>每一个请求的url地址，都对应着一个函数，叫视图函数，由视图函数处理请求后，再返回页面内容给浏览器显示。<br>在<strong>polls/views.py</strong>中添加代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from django.http import HttpResponse</span><br><span class="line"></span><br><span class="line">def index(request):</span><br><span class="line">        Return HttpResponse(&quot;Hello,world.You&#39;reatthepollsindex.&quot;)</span><br></pre></td></tr></table></figure>
+<p>在这里，==每个模型都是django.db.models.Model的子类==。每个模型都有许多类变量，每个类变量代表模型中的数据库字段。==每一个字段都是一个Field的实例==，不同的Field代表了不同类型的数据。</p>
+<h2 id="•-激活模型"><a href="#•-激活模型" class="headerlink" title="• 激活模型"></a>• 激活模型</h2><p>为了包含应用，需要将应用的引用添加在设置的INSTALLED_APPS中，也就是将<br>polls.apps.PollsConfig添加到INSTALLED_APPS中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">INSTALLED_APPS &#x3D; [</span><br><span class="line">    &#39;polls.apps.PollsConfig&#39;,</span><br><span class="line">    &#39;django.contrib.admin&#39;,</span><br><span class="line">    &#39;django.contrib.auth&#39;,</span><br><span class="line">    &#39;django.contrib.contenttypes&#39;,</span><br><span class="line">    &#39;django.contrib.sessions&#39;,</span><br><span class="line">    &#39;django.contrib.messages&#39;,</span><br><span class="line">    &#39;django.contrib.staticfiles&#39;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 
-<h2 id="•-创建URL关系"><a href="#•-创建URL关系" class="headerlink" title="• 创建URL关系"></a>• 创建URL关系</h2><p>polls目录中创建URLconf，即创建一个urls.py文件，包含如下代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from django.urls import path</span><br><span class="line"></span><br><span class="line">from . import views</span><br><span class="line"></span><br><span class="line">urlpatterns&#x3D;[</span><br><span class="line">path(&#39;&#39;,  views.index, name&#x3D;&#39;index&#39;),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-<p>在项目之下的urls.py文件（mysite/urls.py）中加入代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from django.contrib import admin</span><br><span class="line">from django.urls import include,path</span><br><span class="line"></span><br><span class="line">urlpatterns&#x3D;[</span><br><span class="line">path(&#39;polls&#x2F;&#39;,include(&#39;polls.urls&#39;)),</span><br><span class="line">path(&#39;admin&#x2F;&#39;,admin.site.urls),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-<p><strong>重点：项目和应用之下urls.py文件的不同</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 项目下的urls.py</span><br><span class="line">urlpatterns &#x3D; [</span><br><span class="line">    ...</span><br><span class="line">    # 包含应用下的urls.py文件</span><br><span class="line">    url(正则表达式, include(&#39;应用名.urls&#39;))</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py makemigrations polls</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># 应用下的urls.py</span><br><span class="line">urlpatterns &#x3D; [</span><br><span class="line"> </span><br><span class="line">   # 该path()函数传递了四个参数，两个是必需的 route和view，</span><br><span class="line">   # 以及两个可选的kwargs和name。</span><br><span class="line">   path(route , view , kwargs , name),</span><br><span class="line">        # route：route是包含URL模式的字符串。在处理请求时，</span><br><span class="line">        # Django从第一个模式开始，urlpatterns然后沿列表向下移动，</span><br><span class="line">        # 将请求的URL与每个模式进行比较，直到找到匹配的URL。</span><br><span class="line">        # view：当Django找到匹配的模式时，使用HttpRequest对象作为第一个参数，</span><br><span class="line">        # 并将路线中所有“捕获的”值作为关键字参数，调用指定的view函数。</span><br><span class="line">        # name：命名URL可以使您在Django中的其他地方（尤其是在模板内部）</span><br><span class="line">        # 明确地引用它。这项强大的功能可让您仅触摸单个文件</span><br><span class="line">        # 即可对项目的URL模式进行全局更改。</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>表示对模型进行了一些修改，称之为<strong>迁移（migration）</strong>，会生成一个<em>polls/migrations/0001_initial.py</em>文件，可以进行人工编辑。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py sqlmigrate polls 0001</span><br></pre></td></tr></table></figure>
+
+<p>可以看到SQL中，进行了那些迁移操作。</p>
+<p><strong>注：</strong><br>1、数据表的名称是将应用名称和模型名称的小写组合起来自动生成的；<br>2、Django将附加”_id”到外键字段名称。<br>3、该sqlmigrate命令<strong>==实际上并未在数据库上运行迁移-而是将其打印到屏幕上==</strong>，以便您可以查看SQL Django认为需要的内容。这对于检查Django将要执行的操作或是否有需要SQL脚本进行更改的数据库管理员很有用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py check</span><br></pre></td></tr></table></figure>
+
+<p>检查项目中是否存在任何问题，而无需进行迁移或接触数据库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py migrate</span><br></pre></td></tr></table></figure>
+
+<p>获取所有尚未应用的迁移，并针对数据库来运行它们，实际上就是根据之前的修改来改变数据库。</p>
+<p>模型更改的三步：<br>    <strong>• 更改模型（在<em>models.py</em>中）。<br>    • 运行为这些更改创建迁移 python manage.py makemigrations<br>    • 运行以将那些更改应用到数据库 python manage.py migrate</strong></p>
+<p>Django Admin介绍<br>admin是作为网站管理员存在</p>
+<h2 id="•-创建管理员用户"><a href="#•-创建管理员用户" class="headerlink" title="• 创建管理员用户"></a>• 创建管理员用户</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py createsuperuser</span><br></pre></td></tr></table></figure>
+
+<p>之后按提示信息输入内容（在输入密码的时候，可能会有密码无回显的情况，只需正常输入，不会有其他影响，我的环境是Python3.8+Django3.0）</p>
+<p>然后运行服务器，输入<a href="http://127.0.0.1:8000/admin/" target="_blank" rel="noopener">http://127.0.0.1:8000/admin/</a><br>会显示管理员登录界面：<br><img src="https://img-blog.csdnimg.cn/20200115172844937.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNTc1OTI2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>注意这里输入的不是，这个网页出现的会是错误页面：<br><img src="https://img-blog.csdnimg.cn/20200115172852382.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNTc1OTI2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>修改<em>polls/admin.py</em>之后，应用就可以出现在管理员页面上。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from django.contrib import admin</span><br><span class="line">from .models import Question</span><br><span class="line">admin.site.register(Question)</span><br></pre></td></tr></table></figure>
+<p>之后可以通过管理员界面对Question数据库进行修改。</p>
 
       </div>
       
@@ -417,10 +430,10 @@
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-01-19T20:59:47+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-01-22T19:46:23+08:00">
   <a class='notlink'>
     <i class="fas fa-clock" aria-hidden="true"></i>
-    <p>更新于 2020年1月19日</p>
+    <p>更新于 2020年1月22日</p>
   </a>
 </div>
 
@@ -442,7 +455,7 @@
       
         <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer"
           
-          href="http://connect.qq.com/widget/shareqq/index.html?url=http://codebiluo.cn/2020/01/19/Django-1/&title=Django-1 | Biluo&summary="
+          href="http://connect.qq.com/widget/shareqq/index.html?url=http://codebiluo.cn/2020/01/19/Django/Django-2/&title=Django-2 | Biluo&summary="
           
           >
           
@@ -454,7 +467,7 @@
       
         <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer"
           
-          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://codebiluo.cn/2020/01/19/Django-1/&title=Django-1 | Biluo&summary="
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://codebiluo.cn/2020/01/19/Django/Django-2/&title=Django-2 | Biluo&summary="
           
           >
           
@@ -466,7 +479,7 @@
       
         <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer"
           
-          href="http://service.weibo.com/share/share.php?url=http://codebiluo.cn/2020/01/19/Django-1/&title=Django-1 | Biluo&summary="
+          href="http://service.weibo.com/share/share.php?url=http://codebiluo.cn/2020/01/19/Django/Django-2/&title=Django-2 | Biluo&summary="
           
           >
           
@@ -494,9 +507,9 @@
                       <span class="art-item-left">
                           <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;上一页</h6>
                           <h4>
-                              <a href="/2020/01/19/Django-2/" rel="prev" title="Django-2">
+                              <a href="/2020/01/22/Django/Django-3/" rel="prev" title="Django-3">
                                 
-                                    Django-2
+                                    Django-3
                                 
                               </a>
                           </h4>
@@ -509,6 +522,25 @@
                       </span>
                   </section>
               
+              
+                  <section class="next">
+                      <span class="art-item-right" aria-hidden="true">
+                          <h6>下一页&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
+                          <h4>
+                              <a href="/2020/01/19/Django/Django-1/" rel="prev" title="Django-1">
+                                  
+                                      Django-1
+                                  
+                              </a>
+                          </h4>
+                          
+                              
+                              <h6 class="tags">
+                                  <a class="tag" href="/tags/Django/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> Django</a>
+                              </h6>
+                          
+                      </span>
+                  </section>
               
           </div>
       
@@ -534,7 +566,7 @@
 
   <script>
     window.subData = {
-      title: 'Django-1',
+      title: 'Django-2',
       tools: true
     }
   </script>
@@ -620,7 +652,7 @@
 </header>
 
     <div class='content pure'>
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#•-创建项目"><span class="toc-text">• 创建项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#•-运行服务器"><span class="toc-text">• 运行服务器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#•-创建应用程序（polls应用）"><span class="toc-text">• 创建应用程序（polls应用）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#•-第一个视图函数"><span class="toc-text">• 第一个视图函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#•-创建URL关系"><span class="toc-text">• 创建URL关系</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#•-数据库设置"><span class="toc-text">• 数据库设置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#•-创建模型"><span class="toc-text">• 创建模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#•-激活模型"><span class="toc-text">• 激活模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#•-创建管理员用户"><span class="toc-text">• 创建管理员用户</span></a></li></ol>
     </div>
   </section>
 
