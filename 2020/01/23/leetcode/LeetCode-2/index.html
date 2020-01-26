@@ -333,6 +333,14 @@
         
           
             
+  
+  <div class='new-meta-item category'>
+    <a href='/categories/%E5%88%B7%E9%A2%98/' rel="nofollow">
+      <i class="fas fa-folder-open" aria-hidden="true"></i>
+      <p>刷题</p>
+    </a>
+  </div>
+
 
           
         
@@ -375,7 +383,11 @@
 
     <section class="article typo">
       <div class="article-entry" itemprop="articleBody">
-        
+        <h3 id="一次遍历"><a href="#一次遍历" class="headerlink" title="一次遍历"></a>一次遍历</h3><p>这个问题主要考察的是链表的操作和出现特殊情况的处理。<br>1、当两个链表一样长的时候，问题比较好处理，直接挨个相加即可；<br>2、当两个链表不一样的时候，就需要对遍历节点进行判断，不能出现再访问属性val的语句；<br>3、由于一条链有可能为空这种极端情况，所以不能简单的采用原地算法；<br>4、问题有一个小坑，就是有可能最后还有一位进位，对这个情况要考虑在内；<br>5、可以通过添加一个哑节点来减少代码；</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Definition <span class="keyword">for</span> singly-linked list.</span><br><span class="line"> * struct ListNode &#123;</span><br><span class="line"> *     int val;</span><br><span class="line"> *     ListNode *next;</span><br><span class="line"> *     ListNode(int x) : val(x), next(NULL) &#123;&#125;</span><br><span class="line"> * &#125;;</span><br><span class="line"> */</span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) &#123;</span><br><span class="line">        ListNode *scan1 = l1;</span><br><span class="line">        ListNode *scan2 = l2;</span><br><span class="line">        ListNode *head = new ListNode(<span class="number">0</span>);  //这是哑节点</span><br><span class="line">        ListNode *scan = head;</span><br><span class="line">        int flag = <span class="number">0</span>;  //标记进位</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (<span class="number">1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (scan1 == NULL &amp;&amp; scan2 == NULL)</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            int n1 = scan1!=NULL?scan1-&gt;val:0;</span><br><span class="line">            int n2 = scan2!=NULL?scan2-&gt;val:0;</span><br><span class="line">            scan-&gt;next = new ListNode((n1+n2+flag)%10);</span><br><span class="line">            flag = (n1+n2+flag)/<span class="number">10</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (scan1 != NULL)</span><br><span class="line">                scan1 = scan1-&gt;next; </span><br><span class="line">            <span class="keyword">if</span> (scan2 != NULL)</span><br><span class="line">                scan2 = scan2-&gt;next;</span><br><span class="line">            scan = scan-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (flag)  //如果最后还有进位</span><br><span class="line">            scan-&gt;next = new ListNode(1);</span><br><span class="line"></span><br><span class="line">        return head-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>时间复杂度：O(MAX{m,n})<br>空间复杂度：O(MAX{m,n})</p>
+
       </div>
       
       
@@ -387,7 +399,7 @@
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-01-23T10:54:44+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-01-23T10:55:34+08:00">
   <a class='notlink'>
     <i class="fas fa-clock" aria-hidden="true"></i>
     <p>更新于 2020年1月23日</p>
@@ -398,6 +410,9 @@
       
         
           
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/LeetCode/" rel="nofollow"><i class="fas fa-tag" aria-hidden="true"></i><p>LeetCode</p></a></div>
+
 
         
       
@@ -461,17 +476,12 @@
                       <span class="art-item-left">
                           <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;上一页</h6>
                           <h4>
-                              <a href="/2020/01/23/LeetCode-2/" rel="prev" title="LeetCode-2">
+                              <a href="/2020/01/26/leetcode/LeetCode-3/" rel="prev" title="leetcode/LeetCode-3">
                                 
-                                    LeetCode-2
+                                    leetcode/LeetCode-3
                                 
                               </a>
                           </h4>
-                          
-                              
-                              <h6 class="tags">
-                                  <a class="tag" href="/tags/LeetCode/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> LeetCode</a>
-                              </h6>
                           
                       </span>
                   </section>
@@ -596,6 +606,20 @@
           
             
               
+  <section class='widget toc-wrapper'>
+    
+<header class='pure'>
+  <div><i class="fas fa-list fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;本文目录</div>
+  
+    <!-- <div class='wrapper'><a class="s-toc rightBtn" rel="external nofollow noopener noreferrer" href="javascript:void(0)"><i class="fas fa-thumbtack fa-fw"></i></a></div> -->
+  
+</header>
+
+    <div class='content pure'>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一次遍历"><span class="toc-text">一次遍历</span></a></li></ol>
+    </div>
+  </section>
+
 
             
           

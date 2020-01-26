@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   
-  <title>LeetCode-2 | Biluo</title>
+  <title>leetcode/LeetCode-3 | Biluo</title>
   
   
 
@@ -293,8 +293,8 @@
         
   
     <h1 class="title">
-      <a href="/2020/01/23/LeetCode-2/">
-        LeetCode-2
+      <a href="/2020/01/26/leetcode/LeetCode-3/">
+        leetcode/LeetCode-3
       </a>
     </h1>
   
@@ -325,7 +325,7 @@
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-calendar-alt" aria-hidden="true"></i>
-    <p>2020-01-23</p>
+    <p>2020-01-26</p>
   </a>
 </div>
 
@@ -333,14 +333,6 @@
         
           
             
-  
-  <div class='new-meta-item category'>
-    <a href='/categories/%E5%88%B7%E9%A2%98/' rel="nofollow">
-      <i class="fas fa-folder-open" aria-hidden="true"></i>
-      <p>刷题</p>
-    </a>
-  </div>
-
 
           
         
@@ -383,10 +375,41 @@
 
     <section class="article typo">
       <div class="article-entry" itemprop="articleBody">
-        <h3 id="一次遍历"><a href="#一次遍历" class="headerlink" title="一次遍历"></a>一次遍历</h3><p>这个问题主要考察的是链表的操作和出现特殊情况的处理。<br>1、当两个链表一样长的时候，问题比较好处理，直接挨个相加即可；<br>2、当两个链表不一样的时候，就需要对遍历节点进行判断，不能出现再访问属性val的语句；<br>3、由于一条链有可能为空这种极端情况，所以不能简单的采用原地算法；<br>4、问题有一个小坑，就是有可能最后还有一位进位，对这个情况要考虑在内；<br>5、可以通过添加一个哑节点来减少代码；</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Definition <span class="keyword">for</span> singly-linked list.</span><br><span class="line"> * struct ListNode &#123;</span><br><span class="line"> *     int val;</span><br><span class="line"> *     ListNode *next;</span><br><span class="line"> *     ListNode(int x) : val(x), next(NULL) &#123;&#125;</span><br><span class="line"> * &#125;;</span><br><span class="line"> */</span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) &#123;</span><br><span class="line">        ListNode *scan1 = l1;</span><br><span class="line">        ListNode *scan2 = l2;</span><br><span class="line">        ListNode *head = new ListNode(<span class="number">0</span>);  //这是哑节点</span><br><span class="line">        ListNode *scan = head;</span><br><span class="line">        int flag = <span class="number">0</span>;  //标记进位</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (<span class="number">1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (scan1 == NULL &amp;&amp; scan2 == NULL)</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            int n1 = scan1!=NULL?scan1-&gt;val:0;</span><br><span class="line">            int n2 = scan2!=NULL?scan2-&gt;val:0;</span><br><span class="line">            scan-&gt;next = new ListNode((n1+n2+flag)%10);</span><br><span class="line">            flag = (n1+n2+flag)/<span class="number">10</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (scan1 != NULL)</span><br><span class="line">                scan1 = scan1-&gt;next; </span><br><span class="line">            <span class="keyword">if</span> (scan2 != NULL)</span><br><span class="line">                scan2 = scan2-&gt;next;</span><br><span class="line">            scan = scan-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (flag)  //如果最后还有进位</span><br><span class="line">            scan-&gt;next = new ListNode(1);</span><br><span class="line"></span><br><span class="line">        return head-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+        <h4 id="一、子问题"><a href="#一、子问题" class="headerlink" title="一、子问题"></a>一、子问题</h4><p>解决这道题之前，可以先思考一个重要的问题，就是<strong>给定的一段字符串，如何判断它是否有重复的字符。</strong><br>法一、容易想到的是遍历每一个字符，判断在它之后是否出现相同字符，时间复杂度o(n^2)。<br>法二、同LeetCode-1，<strong>用哈希表进行搜索加速</strong>：维护一个数组作为哈希表，初始化为0。遍历字符串，并将每个字符对应位置（eg：‘f’-‘a’ = 5，‘f’对应下标为5）置为1，如果该位置已经置1，那么就说明出现重复字符。这个方法只需要一次遍历，时间复杂度o(n)。</p>
+<h4 id="二、问题思路"><a href="#二、问题思路" class="headerlink" title="二、问题思路"></a>二、问题思路</h4><p>解决子问题之后，我们知道可以用哈希表来进行加速。维护一个数组作为哈希表，<strong>初始化内容为-1</strong>（不初始化为0是因为之后哈希表中保存的会是字符下标），遍历整个字符串，将每一个字符对应位置保存当前字符的下标。遍历至下标n处，如果该位置对应哈希表内容为m（m != -1），则说明 <strong>[m,n) 是无重复字符子串，[m,n]会出现重复字符</strong>。计算当前无重复子串长度后，保存较大者。之后重置哈希表，再进行之后字符串的遍历。<br>这个方法也就是官方题解中的优化滑动窗口。</p>
+<h4 id="三、代码"><a href="#三、代码" class="headerlink" title="三、代码"></a>三、代码</h4><pre><code class="cpp"><span class="function"><span class="keyword">int</span> <span class="title">lengthOfLongestSubstring</span><span class="params">(<span class="keyword">char</span> * s)</span></span>{
+    <span class="keyword">int</span> from , to;  <span class="comment">//当前最长子串起止下标</span>
+    from = to = <span class="number">0</span>;
+    <span class="keyword">int</span> ans = <span class="number">0</span>;
+    <span class="keyword">int</span> hash[<span class="number">256</span>];  <span class="comment">//每个字符的键值对</span>
+    <span class="built_in">memset</span>(hash , <span class="number">-1</span> , <span class="keyword">sizeof</span>(hash));
 
-<p>时间复杂度：O(MAX{m,n})<br>空间复杂度：O(MAX{m,n})</p>
+    <span class="keyword">while</span> (s[to] != <span class="string">'\0'</span>)
+    {
+        <span class="keyword">if</span> (hash[s[to]] == <span class="number">-1</span>)
+        {
+            hash[s[to]] = to;
+            to++;
+        }
+        <span class="keyword">else</span> <span class="keyword">if</span> (hash[s[to]] &lt; from)  <span class="comment">//重复的不是当前最长子串</span>
+        {
+            hash[s[to]] = to;
+            to++;
+        }
+        <span class="keyword">else</span>  <span class="comment">//当前最长子串出现重复，更新from的值为重复字符（前面的那个）位置加1</span>
+        {
+            ans = ans &gt; (to - from) ? ans : (to - from);
+            from = hash[s[to]] + <span class="number">1</span>;
+            hash[s[to]] = to;
+            to++;
+        }
+    }
+
+    ans = ans &gt; (to - from) ? ans : (to - from);
+
+    <span class="keyword">return</span> ans;
+}
+</code></pre>
 
       </div>
       
@@ -399,10 +422,10 @@
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-01-23T10:55:34+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-01-26T11:32:25+08:00">
   <a class='notlink'>
     <i class="fas fa-clock" aria-hidden="true"></i>
-    <p>更新于 2020年1月23日</p>
+    <p>更新于 2020年1月26日</p>
   </a>
 </div>
 
@@ -410,9 +433,6 @@
       
         
           
-  
-  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/LeetCode/" rel="nofollow"><i class="fas fa-tag" aria-hidden="true"></i><p>LeetCode</p></a></div>
-
 
         
       
@@ -424,7 +444,7 @@
       
         <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer"
           
-          href="http://connect.qq.com/widget/shareqq/index.html?url=http://codebiluo.cn/2020/01/23/LeetCode-2/&title=LeetCode-2 | Biluo&summary="
+          href="http://connect.qq.com/widget/shareqq/index.html?url=http://codebiluo.cn/2020/01/26/leetcode/LeetCode-3/&title=leetcode/LeetCode-3 | Biluo&summary="
           
           >
           
@@ -436,7 +456,7 @@
       
         <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer"
           
-          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://codebiluo.cn/2020/01/23/LeetCode-2/&title=LeetCode-2 | Biluo&summary="
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://codebiluo.cn/2020/01/26/leetcode/LeetCode-3/&title=leetcode/LeetCode-3 | Biluo&summary="
           
           >
           
@@ -448,7 +468,7 @@
       
         <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer"
           
-          href="http://service.weibo.com/share/share.php?url=http://codebiluo.cn/2020/01/23/LeetCode-2/&title=LeetCode-2 | Biluo&summary="
+          href="http://service.weibo.com/share/share.php?url=http://codebiluo.cn/2020/01/26/leetcode/LeetCode-3/&title=leetcode/LeetCode-3 | Biluo&summary="
           
           >
           
@@ -484,6 +504,11 @@
                               </a>
                           </h4>
                           
+                              
+                              <h6 class="tags">
+                                  <a class="tag" href="/tags/LeetCode/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> LeetCode</a>
+                              </h6>
+                          
                       </span>
                   </section>
               
@@ -511,7 +536,7 @@
 
   <script>
     window.subData = {
-      title: 'LeetCode-2',
+      title: 'leetcode/LeetCode-3',
       tools: true
     }
   </script>
@@ -597,7 +622,7 @@
 </header>
 
     <div class='content pure'>
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一次遍历"><span class="toc-text">一次遍历</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#一、子问题"><span class="toc-text">一、子问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#二、问题思路"><span class="toc-text">二、问题思路</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#三、代码"><span class="toc-text">三、代码</span></a></li></ol>
     </div>
   </section>
 
