@@ -400,7 +400,7 @@
 
     <section class="article typo">
       <div class="article-entry" itemprop="articleBody">
-        <p>前两天想要上手Unity来AR方面的<del>项目</del>东东 ，探索过程中出现了各种各样的问题，现在将这个过程中遇到的各种各样问题梳理一下，希望后来者能开开心心上手Unity+AR。<br>注意：这是一篇踩坑博客，具体搭建还请自行百度。</p>
+        <p>前两天想要上手Unity来AR方面的<del>项目</del>软件 ，探索过程中出现了各种各样的问题，现在将这个过程中遇到的各种各样问题梳理一下，希望后来者能开开心心上手Unity+AR。<br>注意：这是一篇踩坑博客，具体搭建还请自行百度。</p>
 <h4 id="一、ARFoundation-or-ARCore-or-ARKit"><a href="#一、ARFoundation-or-ARCore-or-ARKit" class="headerlink" title="一、ARFoundation or ARCore or ARKit"></a>一、ARFoundation or ARCore or ARKit</h4><p>Unity作为一个平台，不直接提供XR（包括VR、AR和MR）的开发包，这时就需要其他公司提供各种各样的SDK工具包，国外有苹果公司的ARKit、谷歌公司的ARCore、Unity的ARFoundation，还有最近发现的OpenCVForUnity，而国内有EasyAR这些SDK工具包。ARKit是针对于IOS开发，ARCore是针对于Android开发，而我使用的是ARFoundation，这是Unity将ARKit和ARCore进一步整合的工作平台。<br>（这里就要说到一个应该知道的问题，<strong>IOS开发一定需要Mac，或者是电脑装双系统</strong>，据望网友<del>可靠</del>信息，如果使用虚拟机，龟速运行不说， 还会有很多Bug。）</p>
 <h4 id="二、Android-JDK-amp-NDK"><a href="#二、Android-JDK-amp-NDK" class="headerlink" title="二、Android JDK &amp; NDK"></a>二、Android JDK &amp; NDK</h4><h5 id="1、解决方法"><a href="#1、解决方法" class="headerlink" title="1、解决方法"></a>1、解决方法</h5><p>这是搭建环境过程遇到的最让我头疼的问题，直接原因就是我对进度条的不信任。<br>当你进行Android开发时，需要将项目打包成apk，这时就需要Android JDK &amp; NDK工具包，这时你有两种选择<br>①、自行下载SDK manager和NDK；（这条路让我感受到世界的恶意）<br>②、使用Unity Hub直接下载<strong>Unity 2019.3.0f6 (64-bit)</strong>，这样可以直接添加各种模块；</p>
 <h5 id="2、方法①"><a href="#2、方法①" class="headerlink" title="2、方法①"></a>2、方法①</h5><p>（想要较好解决方法的同学可以直接看方法②）<br>SDK和NDK下载可以直接从官网下载，建议使用Goole浏览器的迅雷插件，这样可以快一点。<br>SDK：<a href="https://www.androiddevtools.cn/" target="_blank" rel="noopener">https://www.androiddevtools.cn/</a><br>NDK：<a href="https://developer.android.google.cn/ndk/downloads/" target="_blank" rel="noopener">https://developer.android.google.cn/ndk/downloads/</a><br>下载SDK Tools后打开SDK manager再下载需要的对应工具，尽量下载最新版本。<br>下载NDK之后，就会遇到一个第一个问题：<strong>NDK版本不正确</strong><br><img src="https://img-blog.csdnimg.cn/2020020411555648.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNTc1OTI2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>令人震惊的是，Unity要求的NDK版本的小版本号怎么这么长！（黑人问号脸）还能把所有小版本都发布吗！这就导致我花费了大量时间在下载NDK，大版本错完小版本错，小版本错完之后还有错。</p>
@@ -423,10 +423,10 @@
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-02-04T12:53:54+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-02-05T19:21:21+08:00">
   <a class='notlink'>
     <i class="fas fa-clock" aria-hidden="true"></i>
-    <p>更新于 2020年2月4日</p>
+    <p>更新于 2020年2月5日</p>
   </a>
 </div>
 
