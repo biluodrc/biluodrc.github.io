@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   
-  <title>LeetCode-92 哨位节点的重要性 | Biluo</title>
+  <title>Tag: LeetCode | Biluo</title>
   
   
 
@@ -48,7 +48,7 @@
   
   
   <div class="cover-wrapper">
-    <cover class='cover post half'>
+    <cover class='cover  half'>
       
         
   <h1 class='title'>Biluo'Blog</h1>
@@ -280,11 +280,19 @@
 
   <div class="l_body">
     <div class='body-wrapper'>
-      <div class='l_main'>
+      
+<div class='l_main'>
   
-
-  <article id="post" class="post white-box article-type-post" itemscope itemprop="blogPost">
     
+      
+  <section class="post-list">
+    
+    
+      
+        
+          <div class='post-wrapper'>
+            <article class="post reveal ">
+  
 
 
   <section class='meta'>
@@ -293,13 +301,11 @@
     <div class="meta" id="header-meta">
       
         
-  
-    <h1 class="title">
-      <a href="/2020/01/26/LeetCode-92/">
-        LeetCode-92 哨位节点的重要性
-      </a>
-    </h1>
-  
+  <h2 class="title">
+    <a href="/2020/01/23/LeetCode-1/">
+      LeetCode-1 利用哈希表进行查找加速
+    </a>
+  </h2>
 
 
       
@@ -327,7 +333,7 @@
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-calendar-alt" aria-hidden="true"></i>
-    <p>2020-01-26</p>
+    <p>2020-01-23</p>
   </a>
 </div>
 
@@ -349,36 +355,18 @@
           
             
   
-    <div class="new-meta-item browse busuanzi">
-      <a class='notlink'>
-        <i class="fas fa-eye" aria-hidden="true"></i>
-        <p>
-          <span id="busuanzi_value_page_pv">
-            <i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i>
-          </span>
-        </p>
-      </a>
-    </div>
-  
-
-
-          
-        
-          
-            
-  
     <div class="new-meta-item wordcount">
       <a class='notlink'>
         <i class="fas fa-keyboard" aria-hidden="true"></i>
         <p>字数统计:</p>
-        <p>539字</p>
+        <p>333字</p>
       </a>
     </div>
     <div class="new-meta-item readtime">
       <a class='notlink'>
         <i class="fas fa-hourglass-half" aria-hidden="true"></i>
         <p>阅读时长≈</p>
-        <p>2分</p>
+        <p>1分</p>
       </a>
     </div>
   
@@ -398,167 +386,62 @@
   </section>
 
 
-    <section class="article typo">
-      <div class="article-entry" itemprop="articleBody">
-        <h4 id="一、解题思路"><a href="#一、解题思路" class="headerlink" title="一、解题思路"></a>一、解题思路</h4><p>这个问题其实等同于反转链表，只是将问题变成了子链表。<br>在反转链表的时候，是<strong>引入了prev，scan，next三个指针</strong>，分别表示当前节点的前一个节点，当前节点，当前节点的后一个节点。<strong>遍历的过程只需要将scan-&gt;next赋值为prev</strong>。最后处理头节点即可。<br>回到这个问题，其实就是在反转m至n号节点，将最后处理头节点的过程变成处理这一段链表两端节点。</p>
-<h4 id="二、具体流程"><a href="#二、具体流程" class="headerlink" title="二、具体流程"></a>二、具体流程</h4><p>首先需要先找到第m个节点，然后反转m至n号节点，然后将m号节点的next指针指向第n+1号节点，再将m-1号节点的next指针指向m-1号节点。</p>
-<h4 id="三、重点问题"><a href="#三、重点问题" class="headerlink" title="三、重点问题"></a>三、重点问题</h4><p>在处理的过程中会有这么几个问题：<br>eg：1-&gt;2-&gt;3-&gt;4-&gt;NULL<br>1、考虑m=1，n=2的情况，这种情况导致<strong>m-1号节点为空</strong>，如果直接对给定链表操作，会导致代码中不断地在考虑特殊情况，所以我们添加哨位节点，这样代码实现的难度直线下降。<br>2、考虑m=3，n=4的情况，这种情况会在next进行迭代的时候出现<strong>空指针访问的情况</strong>。所以在迭代的时候需要充分考虑空指针。</p>
-<h4 id="四、代码"><a href="#四、代码" class="headerlink" title="四、代码"></a>四、代码</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * struct ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode *next;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) : val(x), next(NULL) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">ListNode* <span class="title">reverseBetween</span><span class="params">(ListNode* head, <span class="keyword">int</span> m, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        ListNode *prev , *scan , *next;</span><br><span class="line">        ListNode *tem = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</span><br><span class="line">        tem-&gt;next = head;</span><br><span class="line">        head = tem;  <span class="comment">//添加一个哨位节点</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 遍历找第m个节点</span></span><br><span class="line">        scan = head;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span> ; i &lt; m ; ++i)</span><br><span class="line">            scan = scan-&gt;next;</span><br><span class="line">        ListNode *m_1Node = scan;</span><br><span class="line">        ListNode *mNode = scan-&gt;next;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 反转m至n号节点</span></span><br><span class="line">        prev = mNode;</span><br><span class="line">        scan = mNode-&gt;next;</span><br><span class="line">        next = mNode-&gt;next==<span class="literal">NULL</span>?<span class="literal">NULL</span>:mNode-&gt;next-&gt;next;  <span class="comment">//考虑翻转最后一个节点的可能</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = m ; i &lt; n ; ++i)</span><br><span class="line">        &#123;</span><br><span class="line">            scan-&gt;next = prev;</span><br><span class="line"></span><br><span class="line">            prev = scan;</span><br><span class="line">            scan = next;</span><br><span class="line">            next = next==<span class="literal">NULL</span>?<span class="literal">NULL</span>:next-&gt;next;  <span class="comment">// 考虑n号节点之后再没有节点</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 连接两端</span></span><br><span class="line">        m_1Node-&gt;next = prev;</span><br><span class="line">        mNode-&gt;next = scan;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> head-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-
-      </div>
+  <section class="article typo">
+    <div class="article-entry" itemprop="articleBody">
       
       
-        <br>
-        
-
-
-  <section class='meta' id="footer-meta">
-    <div class='new-meta-box'>
-      
-        
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-01-28T10:47:03+08:00">
-  <a class='notlink'>
-    <i class="fas fa-clock" aria-hidden="true"></i>
-    <p>更新于 2020年1月28日</p>
-  </a>
-</div>
-
-        
-      
-        
-          
-  
-  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/LeetCode/" rel="nofollow"><i class="fas fa-tag" aria-hidden="true"></i><p>LeetCode</p></a></div>
-
-
-        
-      
-        
-          
-  <div class="new-meta-item share -mob-share-list">
-  <div class="-mob-share-list share-body">
-    
-      
-        <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer"
-          
-          href="http://connect.qq.com/widget/shareqq/index.html?url=http://codebiluo.cn/2020/01/26/LeetCode-92/&title=LeetCode-92 哨位节点的重要性 | Biluo&summary="
-          
-          >
-          
-            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qq.png">
-          
-        </a>
-      
-    
-      
-        <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer"
-          
-          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://codebiluo.cn/2020/01/26/LeetCode-92/&title=LeetCode-92 哨位节点的重要性 | Biluo&summary="
-          
-          >
-          
-            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qzone.png">
-          
-        </a>
-      
-    
-      
-        <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer"
-          
-          href="http://service.weibo.com/share/share.php?url=http://codebiluo.cn/2020/01/26/LeetCode-92/&title=LeetCode-92 哨位节点的重要性 | Biluo&summary="
-          
-          >
-          
-            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/weibo.png">
-          
-        </a>
-      
-    
-  </div>
-</div>
-
-
-
-        
+        <div class="readmore">
+          <a href="/2020/01/23/LeetCode-1/" class="flat-box">
+            <i class="fas fa-book-open fa-fw" aria-hidden="true"></i>
+            阅读全文
+          </a>
+        </div>
       
     </div>
+    
+      <div class="full-width auto-padding tags">
+        
+          <a href="/tags/LeetCode/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> LeetCode</a>
+        
+      </div>
+    
   </section>
+</article>
 
-
-      
-      
-          <div class="prev-next">
-              
-                  <section class="prev">
-                      <span class="art-item-left">
-                          <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;上一页</h6>
-                          <h4>
-                              <a href="/2020/01/27/LeetCode-95/" rel="prev" title="LeetCode-95 合理利用返回值">
-                                
-                                    LeetCode-95 合理利用返回值
-                                
-                              </a>
-                          </h4>
-                          
-                              
-                              <h6 class="tags">
-                                  <a class="tag" href="/tags/LeetCode/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> LeetCode</a>
-                              </h6>
-                          
-                      </span>
-                  </section>
-              
-              
-                  <section class="next">
-                      <span class="art-item-right" aria-hidden="true">
-                          <h6>下一页&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
-                          <h4>
-                              <a href="/2020/01/26/LeetCode-3/" rel="prev" title="LeetCode-3 官方题解的优化滑动窗口">
-                                  
-                                      LeetCode-3 官方题解的优化滑动窗口
-                                  
-                              </a>
-                          </h4>
-                          
-                              
-                              <h6 class="tags">
-                                  <a class="tag" href="/tags/LeetCode/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> LeetCode</a>
-                              </h6>
-                          
-                      </span>
-                  </section>
-              
           </div>
+        
       
-    </section>
-  </article>
+    
+  </section>
+  
+    
+      <br>
+      <div class="prev-next">
+        <div class="prev-next">
+          
+            <a class="prev" rel="prev" href="/tags/LeetCode/">
+              <section class="post prev" >
+                <i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;上一页&nbsp;
+              </section>
+            </a>
+          
+          <p class="current">
+            2 / 2
+          </p>
+          
+        </div>
+      </div>
 
-
-
-  <!-- 显示推荐文章和评论 -->
-
-
+    
+    <!-- 根据主题中的设置决定是否在archive中针对摘要部分的MathJax公式加载mathjax.js文件 -->
+    
+    
 
   
 
 
-
-
-
-
-<!-- 根据页面mathjax变量决定是否加载MathJax数学公式js -->
-
-
-
-  <script>
-    window.subData = {
-      title: 'LeetCode-92 哨位节点的重要性',
-      tools: true
-    }
-  </script>
-
-
+    
+  
 </div>
 <aside class='l_side'>
   
@@ -635,25 +518,6 @@
           
         
           
-          
-            
-              
-  <section class='widget toc-wrapper'>
-    
-<header class='pure'>
-  <div><i class="fas fa-list fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;本文目录</div>
-  
-    <!-- <div class='wrapper'><a class="s-toc rightBtn" rel="external nofollow noopener noreferrer" href="javascript:void(0)"><i class="fas fa-thumbtack fa-fw"></i></a></div> -->
-  
-</header>
-
-    <div class='content pure'>
-      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#一、解题思路"><span class="toc-text">一、解题思路</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#二、具体流程"><span class="toc-text">二、具体流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#三、重点问题"><span class="toc-text">三、重点问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#四、代码"><span class="toc-text">四、代码</span></a></li></ol>
-    </div>
-  </section>
-
-
-            
           
         
           
@@ -856,46 +720,6 @@
 
 
             
-          
-        
-          
-          
-        
-      
-        
-          
-          
-        
-          
-          
-        
-          
-          
-        
-          
-          
-        
-          
-          
-        
-          
-          
-        
-      
-        
-          
-          
-        
-          
-          
-        
-          
-          
-        
-          
-          
-        
-          
           
         
           
