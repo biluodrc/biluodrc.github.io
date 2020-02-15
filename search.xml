@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>Django-error-2-3</title>
+      <link href="/2020/02/15/Django-error-2-3/"/>
+      <url>/2020/02/15/Django-error-2-3/</url>
+      
+        <content type="html"><![CDATA[<p>最近在复现别人django的一个电商系统项目，他用的是django2，而我使用的是django3。在调试的过程中，由于这两个版本之间某些语法或者是要求的不同，出现了很多bug。</p><p>从现在开始，这篇博文会写一些我在探索过程中对django2和django3不同点的总结。</p><h4 id="一、url-与path"><a href="#一、url-与path" class="headerlink" title="一、url()与path()"></a>一、<code>url()</code>与<code>path()</code></h4><p><code>url()</code>和<code>path()</code>都是用于实例化urlpatterns的函数。<code>url()</code>是在django1、django2中使用，并且在API文档中明确指出，<strong>在将来的版本中可能不推荐使用</strong>，他还有一个别名为<code>re_path()</code>。<code>path()</code>是django3中使用的函数，是<code>url()</code>的替代品。</p><p>首先需要知道几个问题：</p><p>1、urlpatterns是url配置URLconf中的一个列表，网站生成的请求会遍历urlpartterns寻找匹配的链接，遇到第一个会停下来。然后调用对应的view函数，返回对应的页面。</p><p>2、URLconf指的是默认生成的urls.py文件，在项目初始化（startproject）和应用初始化（startapp）时分别生成。</p><ul><li><p><code>*path(route , view , kwargs = None , name = None)*</code></p><p><img src="https://i.loli.net/2020/02/15/Tjc9J8P25EiA3eC.png" alt="image.png"></p><p><code>path()</code>函数返回要包含在urlpatterns中的元素。</p><p><strong>route参数</strong>应该是一个字符串，包含了一个URL模式。该字符串可能包含尖括号（eg：&lt; username &gt;），以捕获URL的一部分并<strong>将其作为关键字参数发送到view</strong>。尖括号可包含转换器规范（eg：&lt; int:year &gt;），该规范限制了匹配的字符，<strong>还可以更改传递给视图的变量的类型</strong>。例如，&lt; int : year&gt;匹配一串十进制数字并将该值转换为int。</p><p><strong>view参数</strong>是一个<strong>视图函数</strong>或是结果为基于类的视图的<strong>as_view()</strong>。它也可以是一个<strong>django.urls.include()</strong>。</p><p>include()函数是在调用项目中应用的URLconf（也就是对应应用下的urls.py文件）。</p><p><strong>kwargs参数</strong>可以将其他参数<strong>以字典的形式</strong>传递给视图函数。route参数中匹配的关键字、转换器规范转换的匹配字符都是通过kwargs参数来传递。<em>这个参数不是关键参数，可以忽略。</em></p><p><strong>name参数</strong>可以给这个url取一个合适的名字。通过给url取名字，以后在view或者模板中使用这个url，就只需要通过这个名字就可以了。这样做的原因是防止url更改，会导致其他用了这个url的地方都需要更改，但是如果取名字了，就不要做任何改动了。<em>这个参数不是关键参数，可以忽略。</em></p><p><em>附：在python编码中，使用 url = reverse(name) 进行查找 name 对应的url，然后可以用 redirect(url) 进行重定向。</em></p></li><li><p><code>re_path(route, view, kwargs=None, name=None) / url(route, view, kwargs=None, name=None)</code></p><p><code>url()</code>函数也是返回要包含在urlpatterns中的元素。</p><p>其中<em>view、kwargs、name</em>参数与path的用法相同，不同点在于route参数的使用。</p><p><strong>route参数</strong>是一个字符串参数，包含与Python的兼容的正则表达式 re 模块。字符串通常使用原始字符串语法（<code>r&#39;&#39;</code>），以便它们可以包含类似<code>\d</code>的序列，而无需用另一个反斜杠转义反斜杠。进行匹配时，将从正则表达式中捕获的组传递给视图-如果组已命名，则作为命名参数，否则传递为位置参数。这些值将作为字符串传递，而不进行任何类型转换。<em>这样就导致需要掌握正则表达式这个前导知识。</em></p></li></ul><h4 id="二、两个html语句"><a href="#二、两个html语句" class="headerlink" title="二、两个html语句"></a>二、两个html语句</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;% load staticfiles %&#125;</span><br><span class="line">&#123;% load static %&#125;</span><br></pre></td></tr></table></figure><p>这两个都是在html文件中的语句，具体的语法我不了解，但我认为应该是加载静态文件目录的语句。当我的html文件中有前一个语句的时候，网页会出现错误：</p><p><img src="https://i.loli.net/2020/02/15/Xm1unhlTbUwS9qs.png" alt="image.png"></p><p>百度后得知，这是由于<strong>load staticfiles</strong>在django2.1就已经被弃用（不建议使用），并且在django3中直接移除，所以才会出现这样的错误。只需要将它改成<strong>load static</strong>就可以。</p><p>同样的，</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% load staticfiles %&#125;</span><br><span class="line">&#123;% load static from staticfiles %&#125;</span><br><span class="line">&#123;% load admin_static %&#125;</span><br></pre></td></tr></table></figure><p>也是相同的情况，不能在django3中使用，都需要将他们的内容替换成<strong>load static</strong>。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> python </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Django </tag>
+            
+            <tag> advanced </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>百题总结-1</title>
       <link href="/2020/02/11/%E7%99%BE%E9%A2%98%E6%80%BB%E7%BB%93-1/"/>
       <url>/2020/02/11/%E7%99%BE%E9%A2%98%E6%80%BB%E7%BB%93-1/</url>
@@ -33,7 +60,7 @@
       <link href="/2020/02/11/LeetCode-over/"/>
       <url>/2020/02/11/LeetCode-over/</url>
       
-        <content type="html"><![CDATA[<p>这是关于LeetCode在本博客的<strong>最后一篇文章</strong>，让我们悼念那些让我的博客显得臃肿无比的题解们。<br>但是令人开心的是：他们在新的地方获得新生，那就是使用<em>GitBook</em>做出的一个电子书（官方是这么形容的）。<br>之后刷LeetCode的题解都会发布在这里，我也会将它做成一个专栏，也希望大家能从中有所收获！<br><strong>最后附上链接：</strong> <a href="http://codebiluo.cn/myLeetCode/">http://codebiluo.cn/myLeetCode/</a></p>]]></content>
+        <content type="html"><![CDATA[<p>这是关于LeetCode在本博客的<strong>最后一篇文章</strong>，让我们悼念那些让我的博客显得臃肿无比的题解们。<br>但是令人开心的是：他们在新的地方获得新生，那就是使用<em>GitBook</em>做出的一个电子书（官方是这么形容的）。<br>之后刷LeetCode的题解都会发布在这里，我也会将它做成一个专栏，也希望大家能从中有所收获！<br><strong>最后附上链接：</strong> <a href="http://codebiluo.cn/myLeetCode/">http://codebiluo.cn/myLeetCode/</a></p><p>（初始加载会比较慢，请见谅）</p>]]></content>
       
       
       <categories>
@@ -97,6 +124,8 @@
             
             <tag> Django </tag>
             
+            <tag> basic </tag>
+            
         </tags>
       
     </entry>
@@ -121,6 +150,8 @@
         <tags>
             
             <tag> Django </tag>
+            
+            <tag> basic </tag>
             
         </tags>
       
@@ -147,6 +178,8 @@
             
             <tag> Django </tag>
             
+            <tag> basic </tag>
+            
         </tags>
       
     </entry>
@@ -171,6 +204,8 @@
         <tags>
             
             <tag> Django </tag>
+            
+            <tag> basic </tag>
             
         </tags>
       
