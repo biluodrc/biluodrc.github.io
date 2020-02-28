@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   
-  <title>minesweeper | Biluo</title>
+  <title>自动扫雷 | Biluo</title>
   
   
 
@@ -296,7 +296,7 @@
   
     <h1 class="title">
       <a href="/2020/02/28/minesweeper/">
-        minesweeper
+        自动扫雷
       </a>
     </h1>
   
@@ -425,17 +425,20 @@
 <p>2、后文胜率分析中会有对于扫雷失败的分析，通过分析我们可以看到，最终剩下的未点方块和地雷数都是很少的，瀚汶带佬提出的分析特定的方块组合范式（相邻几个方块以一种规律排列，比如比如 1 2 1 、3 3 3 、4 3），根据分析可以得到地雷的位置。<strong>但是</strong>，这种分析并不是万能的，<strong>有些范式会对应多解</strong>，具体内容下文讨论。</p>
 <p>3、没有确定地雷，或者是没有可选点怎么办。最开始的时候，我是直接选择了最左上角的方块，此时我统计出的步数平均值稳定在92步左右，后来将他改成从未选点中随机一个方块，这时步数平均值稳定在89步左右（提升或许有些小）</p>
 <p>……（希望有缘人还能找到更多优化的方法）</p>
-<h4 id="三、结果分析"><a href="#三、结果分析" class="headerlink" title="三、结果分析"></a>三、结果分析</h4><p><em>测试使用的是要求的20</em>20棋盘，50颗地雷。</p>
+<h4 id="三、结果分析"><a href="#三、结果分析" class="headerlink" title="三、结果分析"></a>三、结果分析</h4><p>测试使用的是要求的20*20棋盘，50颗地雷。</p>
 <p>首先给出进行10000次自动扫雷的统计结果：</p>
 <p><img src="https://i.loli.net/2020/02/28/m3DspwMqEoQy7jU.png" alt="gaitubao_VmEf1Ts97xjJrhQ.png"></p>
 <p>从数据中可以看到，<strong>第一步就爆雷的比例非常大</strong>（按匿名同学所说，就是50/400=12.5%左右），这是因为第一步你没有任何点开的方块，算法的决策没有依据，只能随机一个可选点。这个随机出的点完全取决于个人的脸黑程度，与算法的效率无关，故我在统计胜率时将这部分失败的样本舍去。</p>
 <p><strong>首先分析为什么会输。</strong>在得出大概思路的时候，我认为优化的方向应该只是如何让赢的步数降低，但是没想到，每一次测试，会有那么多扫雷失败的情况。这时我就想到了自己在游戏时找不到地雷只能蒙的场景：或许这个就是为什么胜率如此低的原因。给出一个例子勾起大家的回忆（例子仍从匿名群友处获得）：</p>
 <p><img src="https://i.loli.net/2020/02/28/AaIoSN3puQ6Pc8i.png" alt="gaitubao_GJZ8FDTMNgcqUSH _1_.png"></p>
-<p>此时还有三部分没有解决，这三部分其实都是死局，无法解决，右下角分析比较困难，我们用左边和右上角的作为例子。这两部分都是由左右两个方块组成的，同时看到，当前还有6个雷没有找出，问题就出在左右两个方块无论假设哪一个是地雷都能使局面成立。这就是不唯一解的由来。感兴趣的同学可以分析一下右下角的部分，通过假设某个位置有地雷来推断剩下位置的地雷。</p>
+<p>此时还有三部分没有解决，右下角根据交涉某个位置有地雷来分析出地雷的位置如下：</p>
+<p><img src="https://i.loli.net/2020/02/28/gw6Z2mLSlrtFQIe.jpg" alt="gaitubao_4164F094C69CAE5328ADA9F3202FC398 - 副本.png"></p>
+<p>左边和右上角的部分是死局，无法解决，我们来分析这两个部分是如何导致死局的。这两部分都是由左右两个方块组成的，同时看到，当前还有6个雷没有找出，问题就出在左右两个方块无论假设哪一个是地雷都能使局面成立。这就是不唯一解的由来。</p>
 <p><strong>接下来分析胜局的步数情况</strong>。统计步数后，转换为统计图：</p>
 <p><img src="https://i.loli.net/2020/02/28/QbjyuEUgoRc7nVN.png" alt="gaitubao_apLIi4EhGUBlC21 _1_.png"></p>
 <p><em>横坐标为胜局步数，纵坐标为此步数胜局数。</em>非常明显，这是一个高斯分布，最终进行测试的时候，大家的统计情况也就是这样，所以最终成绩的分布自然也是符合高斯分布。</p>
 <p>这个问题也就解决了，之后如还有优化还会继续添加，如果有还得优化方案也欢迎大家联系我！</p>
+<h4 id="四、具体代码"><a href="#四、具体代码" class="headerlink" title="四、具体代码"></a>四、具体代码</h4><p>……之后会有代码查重，避嫌我就暂时不添加进来，提交之后有兴趣的同学可以回来康康具体代码。</p>
 
       </div>
       
@@ -448,7 +451,7 @@
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-02-28T12:00:35+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-02-28T12:29:45+08:00">
   <a class='notlink'>
     <i class="fas fa-clock" aria-hidden="true"></i>
     <p>更新于 2020年2月28日</p>
@@ -473,7 +476,7 @@
       
         <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer"
           
-          href="http://connect.qq.com/widget/shareqq/index.html?url=http://codebiluo.cn/2020/02/28/minesweeper/&title=minesweeper | Biluo&summary="
+          href="http://connect.qq.com/widget/shareqq/index.html?url=http://codebiluo.cn/2020/02/28/minesweeper/&title=自动扫雷 | Biluo&summary="
           
           >
           
@@ -485,7 +488,7 @@
       
         <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer"
           
-          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://codebiluo.cn/2020/02/28/minesweeper/&title=minesweeper | Biluo&summary="
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://codebiluo.cn/2020/02/28/minesweeper/&title=自动扫雷 | Biluo&summary="
           
           >
           
@@ -497,7 +500,7 @@
       
         <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer"
           
-          href="http://service.weibo.com/share/share.php?url=http://codebiluo.cn/2020/02/28/minesweeper/&title=minesweeper | Biluo&summary="
+          href="http://service.weibo.com/share/share.php?url=http://codebiluo.cn/2020/02/28/minesweeper/&title=自动扫雷 | Biluo&summary="
           
           >
           
@@ -565,7 +568,7 @@
 
   <script>
     window.subData = {
-      title: 'minesweeper',
+      title: '自动扫雷',
       tools: true
     }
   </script>
@@ -660,7 +663,7 @@
 </header>
 
     <div class='content pure'>
-      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#一、心路历程"><span class="toc-text">一、心路历程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#二、具体思路"><span class="toc-text">二、具体思路</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#（一）确定地雷位置"><span class="toc-text">（一）确定地雷位置</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#（二）确定可选点位置"><span class="toc-text">（二）确定可选点位置</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#（三）后期优化"><span class="toc-text">（三）后期优化</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#三、结果分析"><span class="toc-text">三、结果分析</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#一、心路历程"><span class="toc-text">一、心路历程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#二、具体思路"><span class="toc-text">二、具体思路</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#（一）确定地雷位置"><span class="toc-text">（一）确定地雷位置</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#（二）确定可选点位置"><span class="toc-text">（二）确定可选点位置</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#（三）后期优化"><span class="toc-text">（三）后期优化</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#三、结果分析"><span class="toc-text">三、结果分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#四、具体代码"><span class="toc-text">四、具体代码</span></a></li></ol>
     </div>
   </section>
 
