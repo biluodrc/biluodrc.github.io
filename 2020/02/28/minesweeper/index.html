@@ -371,14 +371,14 @@
       <a class='notlink'>
         <i class="fas fa-keyboard" aria-hidden="true"></i>
         <p>字数统计:</p>
-        <p>1.7k字</p>
+        <p>2.2k字</p>
       </a>
     </div>
     <div class="new-meta-item readtime">
       <a class='notlink'>
         <i class="fas fa-hourglass-half" aria-hidden="true"></i>
         <p>阅读时长≈</p>
-        <p>5分</p>
+        <p>7分</p>
       </a>
     </div>
   
@@ -421,7 +421,7 @@
 </blockquote>
 <p>这时确定的可选点不止一个，之后需要选择其中的一个点作为返回值。个人认为在选择可选点的时候，除了直接随机一个可选点之外，可以思考一种选择的策略，这个可能是后期优化的一个点吧。</p>
 <h5 id="（三）后期优化"><a href="#（三）后期优化" class="headerlink" title="（三）后期优化"></a>（三）后期优化</h5><p>这里大致给出几个我认为可能会对胜率以及步数有提升的点：</p>
-<p>1、上文中提到的选择可选点时的优化，除了直接随机一个可选点之外，可以思考一种选择的策略；</p>
+<p>1、上文中提到的选择可选点时的优化，除了直接随机一个可选点之外，<del>可以思考一种选择的策略</del>，<strong>现在已经已经有策略咯！！！！！</strong>；</p>
 <p>2、后文胜率分析中会有对于扫雷失败的分析，通过分析我们可以看到，最终剩下的未点方块和地雷数都是很少的，瀚汶带佬提出的分析特定的方块组合范式（相邻几个方块以一种规律排列，比如比如 1 2 1 、3 3 3 、4 3），根据分析可以得到地雷的位置。<strong>但是</strong>，这种分析并不是万能的，<strong>有些范式会对应多解</strong>，具体内容下文讨论。</p>
 <p>3、没有确定地雷，或者是没有可选点怎么办。最开始的时候，我是直接选择了最左上角的方块，此时我统计出的步数平均值稳定在92步左右，后来将他改成从未选点中随机一个方块，这时步数平均值稳定在89步左右（提升或许有些小）</p>
 <p>……（希望有缘人还能找到更多优化的方法）</p>
@@ -438,7 +438,10 @@
 <p><img src="https://i.loli.net/2020/02/28/QbjyuEUgoRc7nVN.png" alt="gaitubao_apLIi4EhGUBlC21 _1_.png"></p>
 <p><em>横坐标为胜局步数，纵坐标为此步数胜局数。</em>非常明显，这是一个高斯分布，最终进行测试的时候，大家的统计情况也就是这样，所以最终成绩的分布自然也是符合高斯分布。</p>
 <p>这个问题也就解决了，之后如还有优化还会继续添加，如果有还得优化方案也欢迎大家联系我！</p>
-<h4 id="四、具体代码"><a href="#四、具体代码" class="headerlink" title="四、具体代码"></a>四、具体代码</h4><p>……之后会有代码查重，避嫌我就暂时不添加进来，提交之后有兴趣的同学可以回来康康具体代码。</p>
+<h4 id="四、后期优化"><a href="#四、后期优化" class="headerlink" title="四、后期优化"></a>四、后期优化</h4><p>完成machine函数之后，为了模拟老师最终测试的形式，编写了一份<strong>模拟1000次老师测试</strong>（每一次随机十个棋盘进行自动游戏），最后，满分的比例稳定在<strong>71%</strong>。作为最后的结果，明显是不够好的。之后的几天总会思考优化的问题，就如我之前所说的优化方法，我尝试从这些方向找到可行的办法，其中1和3是针对于步数的优化， 2是针对于胜率的优化，并且3已经实现。所以最后剩下对步数的优化只有方法1，并且我得到了一种确实可行的优化方法：<strong>原本程序中确定可选点，是从可选点数组中随机挑选一个。但是在实际的游戏中，在选取可选点的时候，我们总会趋向于选择周围有更多未点开的方块的可选点，因为如果点下这样的方块很有可能会扩展出很多的方块，也就是有可能增加了更多的点开方块。相比于将边界方块（周围地雷数大于0的方块）一个一个点开，点开一个内部周围地雷数为0的方块，总会是更优的选择。这也就是我们新的可选点决策方案。</strong></p>
+<p>具体的实施方案是，判断每个可选点周围未点开的方块个数，将未点开方块个数最多的可选点作为最终的决策方块。</p>
+<p>这样一来，平均步数稳定在<strong>83步</strong>，测试得到满分的比例稳定在<strong>86%</strong>，提升了15%，可以说是很大的提升了！</p>
+<h4 id="五、具体代码"><a href="#五、具体代码" class="headerlink" title="五、具体代码"></a>五、具体代码</h4><p>……之后会有代码查重，避嫌我就暂时不添加进来，提交之后有兴趣的同学可以回来康康具体代码。</p>
 
       </div>
       
@@ -451,10 +454,10 @@
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-02-28T12:54:07+08:00">
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-03-02T21:24:04+08:00">
   <a class='notlink'>
     <i class="fas fa-clock" aria-hidden="true"></i>
-    <p>更新于 2020年2月28日</p>
+    <p>更新于 2020年3月2日</p>
   </a>
 </div>
 
@@ -523,6 +526,25 @@
       
       
           <div class="prev-next">
+              
+                  <section class="prev">
+                      <span class="art-item-left">
+                          <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;上一页</h6>
+                          <h4>
+                              <a href="/2020/03/05/HTMLfirstExploration/" rel="prev" title="HTML初探笔记">
+                                
+                                    HTML初探笔记
+                                
+                              </a>
+                          </h4>
+                          
+                              
+                              <h6 class="tags">
+                                  <a class="tag" href="/tags/basic/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> basic</a>
+                              </h6>
+                          
+                      </span>
+                  </section>
               
               
                   <section class="next">
@@ -663,7 +685,7 @@
 </header>
 
     <div class='content pure'>
-      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#一、心路历程"><span class="toc-text">一、心路历程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#二、具体思路"><span class="toc-text">二、具体思路</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#（一）确定地雷位置"><span class="toc-text">（一）确定地雷位置</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#（二）确定可选点位置"><span class="toc-text">（二）确定可选点位置</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#（三）后期优化"><span class="toc-text">（三）后期优化</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#三、结果分析"><span class="toc-text">三、结果分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#四、具体代码"><span class="toc-text">四、具体代码</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#一、心路历程"><span class="toc-text">一、心路历程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#二、具体思路"><span class="toc-text">二、具体思路</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#（一）确定地雷位置"><span class="toc-text">（一）确定地雷位置</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#（二）确定可选点位置"><span class="toc-text">（二）确定可选点位置</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#（三）后期优化"><span class="toc-text">（三）后期优化</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#三、结果分析"><span class="toc-text">三、结果分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#四、后期优化"><span class="toc-text">四、后期优化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#五、具体代码"><span class="toc-text">五、具体代码</span></a></li></ol>
     </div>
   </section>
 
@@ -818,6 +840,10 @@
         
           <li><a class="flat-box" title="/categories/%E5%88%B7%E9%A2%98/" href="/categories/%E5%88%B7%E9%A2%98/"><div class='name'>刷题</div><div class='badge'>(2)</div></a></li>
         
+          <li><a class="flat-box" title="/categories/%E5%89%8D%E7%AB%AF/" href="/categories/%E5%89%8D%E7%AB%AF/"><div class='name'>前端</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box child" title="/categories/%E5%89%8D%E7%AB%AF/HTML/" href="/categories/%E5%89%8D%E7%AB%AF/HTML/"><div class='name'>HTML</div><div class='badge'>(1)</div></a></li>
+        
       </ul>
     </div>
   </section>
@@ -867,7 +893,7 @@
 </header>
 
     <div class='content pure'>
-      <a href="/tags/AR/" style="font-size: 14px; color: #999">AR</a> <a href="/tags/Django/" style="font-size: 24px; color: #555">Django</a> <a href="/tags/LeetCode/" style="font-size: 19px; color: #777">LeetCode</a> <a href="/tags/advanced/" style="font-size: 14px; color: #999">advanced</a> <a href="/tags/basic/" style="font-size: 24px; color: #555">basic</a>
+      <a href="/tags/AR/" style="font-size: 14px; color: #999">AR</a> <a href="/tags/Django/" style="font-size: 20.67px; color: #6c6c6c">Django</a> <a href="/tags/LeetCode/" style="font-size: 17.33px; color: #828282">LeetCode</a> <a href="/tags/advanced/" style="font-size: 14px; color: #999">advanced</a> <a href="/tags/basic/" style="font-size: 24px; color: #555">basic</a>
     </div>
   </section>
 
