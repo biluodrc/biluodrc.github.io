@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>MySQL无法插入中文字符问题</title>
+      <link href="/2020/05/28/MySQLChineseCharactorWrong/"/>
+      <url>/2020/05/28/MySQLChineseCharactorWrong/</url>
+      
+        <content type="html"><![CDATA[<p>刚开始使用MySQL时，遇到了无法插入无法插入中文字符的问题：</p><p>通过查阅资料得知，这是因为默认编码为latin1格式，不支持中文字符，我们需要将表的编码改为UTF8或者是GBK编码，更改的方式有两种：<strong>1、命令行中通过alter命令进行更改；2、图形界面中直接更改；</strong>前者在网上已经有很多相关博客，但遇到这个问题的往往是新手，使用图形界面更改可能会更加直观，故下文只介绍了后一种方法。</p><h4 id="1、打开表的设置页面"><a href="#1、打开表的设置页面" class="headerlink" title="1、打开表的设置页面"></a>1、打开表的设置页面</h4><p><img src="https://i.loli.net/2020/05/28/B4uacRbDYf5vLJH.jpg" alt="SharedScreenshot.jpg"></p><h4 id="2、选择默认编码方式"><a href="#2、选择默认编码方式" class="headerlink" title="2、选择默认编码方式"></a>2、选择默认编码方式</h4><p><img src="https://i.loli.net/2020/05/28/N9rdRnLDVsp17X2.jpg" alt="1.jpg"> </p><p>后面的Collation是校对的意思，是用于字符排序时字符的比较，就像是之前ASCII码中，’b’-‘a’ &gt; 0这样的规则一样。<strong>Collation选择默认的即可。</strong></p><h4 id="3、如果之前已经新建过属性，则还需要更改属性的编码格式"><a href="#3、如果之前已经新建过属性，则还需要更改属性的编码格式" class="headerlink" title="3、如果之前已经新建过属性，则还需要更改属性的编码格式"></a><em>3、如果之前已经新建过属性，则还需要更改属性的编码格式</em></h4><p><img src="https://i.loli.net/2020/05/28/XfcolMt9dVDCG23.jpg" alt="SharedScreenshot.jpg"></p><p>之前已经新建了name属性，可以看到他的Charset为latin1，这时还需要将他改成所需的编码格式。</p><h4 id="4、之后新建的所有属性，都会按照第2步设置的默认选项进行"><a href="#4、之后新建的所有属性，都会按照第2步设置的默认选项进行" class="headerlink" title="4、之后新建的所有属性，都会按照第2步设置的默认选项进行"></a>4、之后新建的所有属性，都会按照第2步设置的默认选项进行</h4><p><img src="https://i.loli.net/2020/05/28/CIG5Qy7LNKj6Bl8.jpg" alt="SharedScreensho2.jpg"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> MySQL </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> basic </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Auto Connect6</title>
       <link href="/2020/04/08/connect6/"/>
       <url>/2020/04/08/connect6/</url>
@@ -20,7 +45,7 @@
       
         <tags>
             
-            <tag> basic </tag>
+            <tag> -博弈树 -alpha-beta剪枝 </tag>
             
         </tags>
       
