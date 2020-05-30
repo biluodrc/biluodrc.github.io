@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>网络五层模型</title>
+      <link href="/2020/05/30/introductiontointernet/"/>
+      <url>/2020/05/30/introductiontointernet/</url>
+      
+        <content type="html"><![CDATA[<p>一般我们将网络分层模型分为两种：<strong>1、TCP/IP四层模型    2、OSI七层模型</strong>。</p><p>这两天学习的过程中看到了另一种五层模型，将传输的过程分为<strong>物理层、数据链路层、网络层、传输层、应用层</strong>，于是我大概复习回顾了一下网络分层模型。</p><p><img src="https://i.loli.net/2020/05/30/45w7Gf8cDTZmAix.png" alt="image.png"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 网络 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> basic </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>MySQL无法插入中文字符问题</title>
       <link href="/2020/05/28/MySQLChineseCharactorWrong/"/>
       <url>/2020/05/28/MySQLChineseCharactorWrong/</url>
