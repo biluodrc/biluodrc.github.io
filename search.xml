@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>ProxyPool</title>
+      <link href="/2020/08/03/ProxyPool/"/>
+      <url>/2020/08/03/ProxyPool/</url>
+      
+        <content type="html"><![CDATA[<p>这两天学到代理池的内容，我在书籍的帮助下，完成了相关代码，并封装好接口，如有需要的同学可以在我的git上查看：<a href="https://github.com/biluodrc/EasyProxyPool/" target="_blank" rel="noopener">https://github.com/biluodrc/EasyProxyPool/</a></p><h3 id="一、总体思想"><a href="#一、总体思想" class="headerlink" title="一、总体思想"></a>一、总体思想</h3><p>代理池实现的方法是通过爬取网上免费代理网站，筛选可用代理，保存在本地数据库中，本地端口作为接口给出代理ip及端口号。</p><p><strong>爬取网上免费代理网站</strong>：百度搜索代理就能找到很多免费代理网站，分析网页之后通过爬虫获取代理ip及端口号。该部分封装为<strong>获取模块</strong>。我是使用requests获取网页，pyquery分析网页元素。</p><p><strong>筛选可用代理</strong>：使用爬取的代理，向目标网站发送请求，判断是否能获取需要的内容；这部分封装为<strong>检测模块</strong>。</p><p><strong>保存在本地数据库中</strong>：这部分封装为<strong>存储模块</strong>。我是使用Redis进行存储。</p><p><strong>本地端口作为接口给出代理ip及端口号</strong>：使用简单的web框架，封装为接口以达到更好的安全性。这部分封装为<strong>接口模块</strong>。我是使用Django进行封装。</p><h3 id="二、文件树说明"><a href="#二、文件树说明" class="headerlink" title="二、文件树说明"></a>二、文件树说明</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">ProxyPool</span><br><span class="line">│  db.sqlite3</span><br><span class="line">│  get_proxy.py从本地端口获取随机可用代理</span><br><span class="line">│  manage.pydjango-admin.py的简单封装，使用python manage.py runserver在本地运行服务器</span><br><span class="line">│  __init__.py</span><br><span class="line">│</span><br><span class="line">└─ProxyPool</span><br><span class="line">    │  asgi.py一个 ASGI 兼容的 Web 服务器的入口，以便运行你的项目。</span><br><span class="line">    │  settings.py该 Django 项目的设置&#x2F;配置。</span><br><span class="line">    │  urls.py该 Django 项目的 URL 声明; 一份由 Django 驱动的网站&quot;目录&quot;。</span><br><span class="line">    │  views.py视图层，包含视图函数，返回url对应的响应。</span><br><span class="line">    │  wsgi.py一个 WSGI 兼容的 Web 服务器的入口，以便运行你的项目。</span><br><span class="line">    │  __init__.py</span><br><span class="line">    │</span><br><span class="line">    ├─SpiderFunction</span><br><span class="line">    │  │  crawler.py爬虫实现模块</span><br><span class="line">    │  │  getter.py获取模块</span><br><span class="line">    │  │  redisClient.py存储模块</span><br><span class="line">    │  │  scheduler.py抓取代理IP的主函数，运行后在redis数据库中会保存可用的代理。</span><br><span class="line">    │  │  tester.py检测模块</span><br><span class="line">    │  │  __init__.py</span><br><span class="line">    │  │</span><br><span class="line">    │  └─__pycache__</span><br><span class="line">    │</span><br><span class="line">    └─__pycache__</span><br></pre></td></tr></table></figure><h3 id="三、问题与解决"><a href="#三、问题与解决" class="headerlink" title="三、问题与解决"></a>三、问题与解决</h3><h4 id="1、获取IP不合法"><a href="#1、获取IP不合法" class="headerlink" title="1、获取IP不合法"></a>1、获取IP不合法</h4><p>在爬取各个免费的代理网站的时候，由于分析网页元素除了一些问题，导致IP地址不合法，比如出现<strong>乱码、中文字符、空IP</strong>这样的问题，解决这些问题自然是可以通过根据不同的网站，单独分析各自出现的问题，但是这并不具有普适性，更好的办法还是用正则表达式检测，进行初步的筛查。判断合法IP地址的正则表达式：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^((2(5[0-5]|[0-4]\d))|[0-1]?\d&#123;1,2&#125;)(\.((2(5[0-5]|[0-4]\d))|[0-1]?\d&#123;1,2&#125;))&#123;3&#125;$</span><br></pre></td></tr></table></figure><h4 id="2、添加THRESHOLD-SCORE导致所有IP都被筛去"><a href="#2、添加THRESHOLD-SCORE导致所有IP都被筛去" class="headerlink" title="2、添加THRESHOLD_SCORE导致所有IP都被筛去"></a>2、添加THRESHOLD_SCORE导致所有IP都被筛去</h4><p>判定是否保留某个代理，使用的方法是给每个代理添加一个对应的分数，<strong>初始化分数INITIAL_SCORE = 10；如果合法，将分数改为最大值MAX_SCORE = 100；如使用该代理无法获取网页，将分数自减一；当分数为零，删除该代理</strong>。我添加了一个THRESHOLD_SCORE = 60，当分数低于该值，删除该代理，这样就导致，很多其实是可用的代理在初始化时就被删掉，最终运行很长时间，数据库中仍然是没有任何IP。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Proxy </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> python </tag>
+            
+            <tag> WebSpider </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>字节夏令营面试小结</title>
       <link href="/2020/07/30/BytedanceInterview/"/>
       <url>/2020/07/30/BytedanceInterview/</url>

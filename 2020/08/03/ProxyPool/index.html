@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   
-  <title>Tag: Bytedance | Biluo</title>
+  <title>ProxyPool | Biluo</title>
   
   
 
@@ -48,7 +48,7 @@
   
   
   <div class="cover-wrapper">
-    <cover class='cover  half'>
+    <cover class='cover post half'>
       
         
   <h1 class='title'>Biluo'Blog</h1>
@@ -280,25 +280,11 @@
 
   <div class="l_body">
     <div class='body-wrapper'>
-      
-<div class='l_main'>
+      <div class='l_main'>
   
+
+  <article id="post" class="post white-box article-type-post" itemscope itemprop="blogPost">
     
-      
-  <section class="post-list">
-    
-      
-        
-          
-        
-      
-    
-    
-      
-        
-          <div class='post-wrapper'>
-            <article class="post reveal ">
-  
 
 
   <section class='meta'>
@@ -307,11 +293,13 @@
     <div class="meta" id="header-meta">
       
         
-  <h2 class="title">
-    <a href="/2020/07/30/BytedanceInterview/">
-      字节夏令营面试小结
-    </a>
-  </h2>
+  
+    <h1 class="title">
+      <a href="/2020/08/03/ProxyPool/">
+        ProxyPool
+      </a>
+    </h1>
+  
 
 
       
@@ -339,7 +327,7 @@
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-calendar-alt" aria-hidden="true"></i>
-    <p>2020-07-30</p>
+    <p>2020-08-03</p>
   </a>
 </div>
 
@@ -349,11 +337,29 @@
             
   
   <div class='new-meta-item category'>
-    <a href='/categories/%E9%9D%A2%E8%AF%95/' rel="nofollow">
+    <a href='/categories/Proxy/' rel="nofollow">
       <i class="fas fa-folder-open" aria-hidden="true"></i>
-      <p>面试</p>
+      <p>Proxy</p>
     </a>
   </div>
+
+
+          
+        
+          
+            
+  
+    <div class="new-meta-item browse busuanzi">
+      <a class='notlink'>
+        <i class="fas fa-eye" aria-hidden="true"></i>
+        <p>
+          <span id="busuanzi_value_page_pv">
+            <i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i>
+          </span>
+        </p>
+      </a>
+    </div>
+  
 
 
           
@@ -365,7 +371,7 @@
       <a class='notlink'>
         <i class="fas fa-keyboard" aria-hidden="true"></i>
         <p>字数统计:</p>
-        <p>938字</p>
+        <p>856字</p>
       </a>
     </div>
     <div class="new-meta-item readtime">
@@ -392,44 +398,155 @@
   </section>
 
 
-  <section class="article typo">
-    <div class="article-entry" itemprop="articleBody">
+    <section class="article typo">
+      <div class="article-entry" itemprop="articleBody">
+        <p>这两天学到代理池的内容，我在书籍的帮助下，完成了相关代码，并封装好接口，如有需要的同学可以在我的git上查看：<a href="https://github.com/biluodrc/EasyProxyPool/" target="_blank" rel="noopener">https://github.com/biluodrc/EasyProxyPool/</a></p>
+<h3 id="一、总体思想"><a href="#一、总体思想" class="headerlink" title="一、总体思想"></a>一、总体思想</h3><p>代理池实现的方法是通过爬取网上免费代理网站，筛选可用代理，保存在本地数据库中，本地端口作为接口给出代理ip及端口号。</p>
+<p><strong>爬取网上免费代理网站</strong>：百度搜索代理就能找到很多免费代理网站，分析网页之后通过爬虫获取代理ip及端口号。该部分封装为<strong>获取模块</strong>。我是使用requests获取网页，pyquery分析网页元素。</p>
+<p><strong>筛选可用代理</strong>：使用爬取的代理，向目标网站发送请求，判断是否能获取需要的内容；这部分封装为<strong>检测模块</strong>。</p>
+<p><strong>保存在本地数据库中</strong>：这部分封装为<strong>存储模块</strong>。我是使用Redis进行存储。</p>
+<p><strong>本地端口作为接口给出代理ip及端口号</strong>：使用简单的web框架，封装为接口以达到更好的安全性。这部分封装为<strong>接口模块</strong>。我是使用Django进行封装。</p>
+<h3 id="二、文件树说明"><a href="#二、文件树说明" class="headerlink" title="二、文件树说明"></a>二、文件树说明</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">ProxyPool</span><br><span class="line">│  db.sqlite3</span><br><span class="line">│  get_proxy.py		从本地端口获取随机可用代理</span><br><span class="line">│  manage.py		django-admin.py的简单封装，使用python manage.py runserver在本地运行服务器</span><br><span class="line">│  __init__.py</span><br><span class="line">│</span><br><span class="line">└─ProxyPool</span><br><span class="line">    │  asgi.py		一个 ASGI 兼容的 Web 服务器的入口，以便运行你的项目。</span><br><span class="line">    │  settings.py	该 Django 项目的设置&#x2F;配置。</span><br><span class="line">    │  urls.py		该 Django 项目的 URL 声明; 一份由 Django 驱动的网站&quot;目录&quot;。</span><br><span class="line">    │  views.py		视图层，包含视图函数，返回url对应的响应。</span><br><span class="line">    │  wsgi.py		一个 WSGI 兼容的 Web 服务器的入口，以便运行你的项目。</span><br><span class="line">    │  __init__.py</span><br><span class="line">    │</span><br><span class="line">    ├─SpiderFunction</span><br><span class="line">    │  │  crawler.py		爬虫实现模块</span><br><span class="line">    │  │  getter.py			获取模块</span><br><span class="line">    │  │  redisClient.py	存储模块</span><br><span class="line">    │  │  scheduler.py		抓取代理IP的主函数，运行后在redis数据库中会保存可用的代理。</span><br><span class="line">    │  │  tester.py			检测模块</span><br><span class="line">    │  │  __init__.py</span><br><span class="line">    │  │</span><br><span class="line">    │  └─__pycache__</span><br><span class="line">    │</span><br><span class="line">    └─__pycache__</span><br></pre></td></tr></table></figure>
+
+<h3 id="三、问题与解决"><a href="#三、问题与解决" class="headerlink" title="三、问题与解决"></a>三、问题与解决</h3><h4 id="1、获取IP不合法"><a href="#1、获取IP不合法" class="headerlink" title="1、获取IP不合法"></a>1、获取IP不合法</h4><p>在爬取各个免费的代理网站的时候，由于分析网页元素除了一些问题，导致IP地址不合法，比如出现<strong>乱码、中文字符、空IP</strong>这样的问题，解决这些问题自然是可以通过根据不同的网站，单独分析各自出现的问题，但是这并不具有普适性，更好的办法还是用正则表达式检测，进行初步的筛查。判断合法IP地址的正则表达式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^((2(5[0-5]|[0-4]\d))|[0-1]?\d&#123;1,2&#125;)(\.((2(5[0-5]|[0-4]\d))|[0-1]?\d&#123;1,2&#125;))&#123;3&#125;$</span><br></pre></td></tr></table></figure>
+
+<h4 id="2、添加THRESHOLD-SCORE导致所有IP都被筛去"><a href="#2、添加THRESHOLD-SCORE导致所有IP都被筛去" class="headerlink" title="2、添加THRESHOLD_SCORE导致所有IP都被筛去"></a>2、添加THRESHOLD_SCORE导致所有IP都被筛去</h4><p>判定是否保留某个代理，使用的方法是给每个代理添加一个对应的分数，<strong>初始化分数INITIAL_SCORE = 10；如果合法，将分数改为最大值MAX_SCORE = 100；如使用该代理无法获取网页，将分数自减一；当分数为零，删除该代理</strong>。我添加了一个THRESHOLD_SCORE = 60，当分数低于该值，删除该代理，这样就导致，很多其实是可用的代理在初始化时就被删掉，最终运行很长时间，数据库中仍然是没有任何IP。</p>
+
+      </div>
       
       
-        <div class="readmore">
-          <a href="/2020/07/30/BytedanceInterview/" class="flat-box">
-            <i class="fas fa-book-open fa-fw" aria-hidden="true"></i>
-            阅读全文
-          </a>
-        </div>
+        <br>
+        
+
+
+  <section class='meta' id="footer-meta">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-08-03T14:29:42+08:00">
+  <a class='notlink'>
+    <i class="fas fa-clock" aria-hidden="true"></i>
+    <p>更新于 2020年8月3日</p>
+  </a>
+</div>
+
+        
+      
+        
+          
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/python/" rel="nofollow"><i class="fas fa-tag" aria-hidden="true"></i><p>python</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/WebSpider/" rel="nofollow"><i class="fas fa-tag" aria-hidden="true"></i><p>WebSpider</p></a></div>
+
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+        <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer"
+          
+          href="http://connect.qq.com/widget/shareqq/index.html?url=http://codebiluo.cn/2020/08/03/ProxyPool/&title=ProxyPool | Biluo&summary="
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qq.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer"
+          
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://codebiluo.cn/2020/08/03/ProxyPool/&title=ProxyPool | Biluo&summary="
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qzone.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer"
+          
+          href="http://service.weibo.com/share/share.php?url=http://codebiluo.cn/2020/08/03/ProxyPool/&title=ProxyPool | Biluo&summary="
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/weibo.png">
+          
+        </a>
+      
+    
+  </div>
+</div>
+
+
+
+        
       
     </div>
-    
-      <div class="full-width auto-padding tags">
-        
-          <a href="/tags/Bytedance/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> Bytedance</a>
-        
-      </div>
-    
   </section>
-</article>
 
-          </div>
-        
+
       
-    
-  </section>
-  
-    
-    <!-- 根据主题中的设置决定是否在archive中针对摘要部分的MathJax公式加载mathjax.js文件 -->
-    
-    
+      
+          <div class="prev-next">
+              
+              
+                  <section class="next">
+                      <span class="art-item-right" aria-hidden="true">
+                          <h6>下一页&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
+                          <h4>
+                              <a href="/2020/07/30/BytedanceInterview/" rel="prev" title="字节夏令营面试小结">
+                                  
+                                      字节夏令营面试小结
+                                  
+                              </a>
+                          </h4>
+                          
+                              
+                              <h6 class="tags">
+                                  <a class="tag" href="/tags/Bytedance/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> Bytedance</a>
+                              </h6>
+                          
+                      </span>
+                  </section>
+              
+          </div>
+      
+    </section>
+  </article>
+
+
+
+  <!-- 显示推荐文章和评论 -->
+
+
 
   
 
 
-    
-  
+
+
+
+
+<!-- 根据页面mathjax变量决定是否加载MathJax数学公式js -->
+
+
+
+  <script>
+    window.subData = {
+      title: 'ProxyPool',
+      tools: true
+    }
+  </script>
+
+
 </div>
 <aside class='l_side'>
   
@@ -506,6 +623,25 @@
           
         
           
+          
+            
+              
+  <section class='widget toc-wrapper'>
+    
+<header class='pure'>
+  <div><i class="fas fa-list fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;本文目录</div>
+  
+    <!-- <div class='wrapper'><a class="s-toc rightBtn" rel="external nofollow noopener noreferrer" href="javascript:void(0)"><i class="fas fa-thumbtack fa-fw"></i></a></div> -->
+  
+</header>
+
+    <div class='content pure'>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、总体思想"><span class="toc-text">一、总体思想</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、文件树说明"><span class="toc-text">二、文件树说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、问题与解决"><span class="toc-text">三、问题与解决</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1、获取IP不合法"><span class="toc-text">1、获取IP不合法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2、添加THRESHOLD-SCORE导致所有IP都被筛去"><span class="toc-text">2、添加THRESHOLD_SCORE导致所有IP都被筛去</span></a></li></ol></li></ol>
+    </div>
+  </section>
+
+
+            
           
         
           
@@ -724,6 +860,46 @@
 
 
             
+          
+        
+          
+          
+        
+      
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+      
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
           
         
           
