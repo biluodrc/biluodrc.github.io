@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>circulardependency</title>
+      <link href="/2020/09/17/circulardependency/"/>
+      <url>/2020/09/17/circulardependency/</url>
+      
+        <content type="html"><![CDATA[<h3 id="一、问题描述"><a href="#一、问题描述" class="headerlink" title="一、问题描述"></a>一、问题描述</h3><p>最近在完成设计模式作业的时候，出现了循环依赖的问题。整个程序包含三个类<code>Game</code>、<code>BaseMenu</code>、<code>Option</code>，其中Game中包含多个Basemenu指针，BaseMenu中包含多个Option指针，Option依赖于Game的实例变量。三个类分别在三个头文件中定义。</p><p>完成程序后，由于报错与类中静态函数访问this指针有关，最开始还没有往类的设计错误上想。在更改了其他的错误，最终只剩下了<code>[Error] aggregate &#39;Game game&#39; has incomplete type and cannot be defined</code>，game为Game的一个实例变量。错误表达的意思是，Option.h的Game变量声明中，Game类是一个不完整的类型。从类的设计上我们可以看出，Game、BaseMenu、Ooption出现了循环依赖的问题：Game类需要Basemenu类才能定义完整，BaseMenu类需要Option类才能定义完整，Option类需要Game类才能定义完整，可以看出，三者陷入了递归的状态。这种循环依赖导致了三个类都无法定义完整。</p><h3 id="二、解决方法"><a href="#二、解决方法" class="headerlink" title="二、解决方法"></a>二、解决方法</h3><p><strong>将实例化变量都转换为指针变量；并在各自头文件中添加依赖类的previous definition，然后在实现文件中导入对应的头文件。</strong></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> C/C++ </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> trial and error </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>ProxyPool</title>
       <link href="/2020/08/03/ProxyPool/"/>
       <url>/2020/08/03/ProxyPool/</url>
