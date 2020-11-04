@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>serialization_deserialization</title>
+      <link href="/2020/11/04/serialization-deserialization/"/>
+      <url>/2020/11/04/serialization-deserialization/</url>
+      
+        <content type="html"><![CDATA[<h3 id="一、基本概念"><a href="#一、基本概念" class="headerlink" title="一、基本概念"></a>一、基本概念</h3><h4 id="1、序列化和反序列化的定义："><a href="#1、序列化和反序列化的定义：" class="headerlink" title="1、序列化和反序列化的定义："></a>1、序列化和反序列化的定义：</h4><p>​    Java序列化就是指把<strong>Java对象转换为字节序列</strong>的过程</p><p>​    Java反序列化就是指把<strong>字节序列恢复为Java对象</strong>的过程。</p><h4 id="2、序列化最重要的作用：在传递和保存对象时，保证对象的完整性和可传递性。对象转换为有序二进制串，以便在网络上传输或者保存在本地文件中。"><a href="#2、序列化最重要的作用：在传递和保存对象时，保证对象的完整性和可传递性。对象转换为有序二进制串，以便在网络上传输或者保存在本地文件中。" class="headerlink" title="2、序列化最重要的作用：在传递和保存对象时，保证对象的完整性和可传递性。对象转换为有序二进制串，以便在网络上传输或者保存在本地文件中。"></a>2、序列化最重要的作用：在传递和保存对象时，保证对象的完整性和可传递性。对象转换为有序二进制串，<strong>以便在网络上传输或者保存在本地文件中。</strong></h4><p>​    反序列化的最重要的作用：根据二进制串中保存的对象状态及描述信息，通过反序列化<strong>重建对象</strong>。</p><p>总结：核心作用就是<strong>对象状态的保存和重建</strong>。（整个过程核心点就是二进制串中所保存的对象状态及描述信息）</p><h4 id="3、序列化优点："><a href="#3、序列化优点：" class="headerlink" title="3、序列化优点："></a>3、序列化优点：</h4><blockquote><p><strong>应用场景：</strong>可以将对象及其状态保存在硬盘当中，网络传输中作为通讯协议的一部分，进程间传递对象</p></blockquote><p>​    ① 将对象转为二进制串存储到硬盘上，当JVM停机的话，二进制串还会在硬盘上默默等待，等待下一次JVM的启动，把序列化的对象，通过反序列化为原来的对象，并且序列化的二进制序列能够减少存储空间（永久性保存对象）。</p><p>​    ② 序列化成二进制串形式的对象可以进行网络传输(二进制形式)，方便了网络传输。</p><p>​    ③ 通过序列化可以在进程间传递对象。</p><h4 id="4、序列化算法需要做的事："><a href="#4、序列化算法需要做的事：" class="headerlink" title="4、序列化算法需要做的事："></a>4、序列化算法需要做的事：</h4><p>​    ① 将对象实例相关的类元数据输出。</p><p>​        （元数据，就是描述数据的数据；故此，类元数据就是描述类中数据（属性）的数据）</p><p>​    ② 递归地输出类的超类描述直到不再有超类。</p><p>​    ③ 类元数据输出完毕后，从最顶端的超类开始输出对象实例的实际数据值。</p><p>​    ④ 从上至下递归输出实例的数据。</p><h3 id="二、实现"><a href="#二、实现" class="headerlink" title="二、实现"></a>二、实现</h3><h4 id="1、必要条件："><a href="#1、必要条件：" class="headerlink" title="1、必要条件："></a>1、必要条件：</h4><p>​    实现<strong>Serializable</strong>或<strong>Externalizable</strong>接口的类的对象才能进行序列化。</p><p>​    其中关键字<strong>transient</strong>修饰的属性不会被序列化。</p><h4 id="2、JDK中序列化和反序列化的API："><a href="#2、JDK中序列化和反序列化的API：" class="headerlink" title="2、JDK中序列化和反序列化的API："></a>2、JDK中序列化和反序列化的API：</h4><p>​    ① <strong>java.io.ObjectInputStream</strong>：对象输入流。</p><p>​        该类的<strong>readObject(ObjectInputStream in)</strong>方法从输入流中读取字节序列，然后将字节序列反序列化为一个对象并返回。</p><p>​    ② <strong>java.io.ObjectOutputStream</strong>：对象输出流。</p><p>​        该类的<strong>writeObject(ObjectOutputSteam out)</strong>方法将将传入的obj对象进行序列化，把得到的字节序列写入到目标输出流中进行输出。</p><p>​    Serializable接口有默认的序列化/反序列化方法，也就是说，对象可以不用自定义readObject和writeObject方法；</p><p>​    Externalnalizable接口没有默认的序列化/反序列化方法，也就是说，必须重载writeExternal(ObjectOutput out)和readExternal(ObjectInput in)方法进行序列化与反序列化。</p><h3 id="三、序列化和反序列化的注意点："><a href="#三、序列化和反序列化的注意点：" class="headerlink" title="三、序列化和反序列化的注意点："></a>三、序列化和反序列化的注意点：</h3><p>① 序列化时，<strong>只对对象的状态进行保存，而不管对象的方法</strong>；</p><p>② <strong>当一个父类实现序列化，子类自动实现序列化</strong>，不需要显式实现Serializable接口；</p><p>③ <strong>当一个对象的实例变量引用其他对象，序列化该对象时也把引用对象进行序列化</strong>；</p><p>④ <strong>并非所有的对象都可以序列化</strong>，至于为什么不可以，有很多原因了，比如：</p><ul><li><strong>安全方面的原因</strong>，比如一个对象拥有private，public等field，对于一个要传输的对象，比如写到文件，或者进行RMI传输等等，在序列化进行传输的过程中，这个对象的private等域是不受保护的；</li><li><strong>资源分配方面的原因</strong>，比如socket，thread类，如果可以序列化，进行传输或者保存，也无法对他们进行重新的资源分配，而且，也是没有必要这样实现；</li></ul><p>⑤ <strong>声明为static和transient类型的成员数据不能被序列化。因为static代表类的状态，transient代表对象的临时数据。</strong></p><p>⑥ 序列化运行时使用一个称为 <strong>serialVersionUID</strong> 的版本号与每个可序列化类相关联，<strong>该序列号在反序列化过程中用于验证序列化对象的发送者和接收者是否为该对象加载了与序列化兼容的类</strong>。为它赋予明确的值。显式地定义serialVersionUID有两种用途（<strong>为了类的不同版本对序列化的兼容性</strong>）：</p><ul><li>在某些场合，希望类的不同版本对序列化兼容，因此需要确保类的不同版本具有相同的serialVersionUID；</li><li>在某些场合，不希望类的不同版本对序列化兼容，因此需要确保类的不同版本具有不同的serialVersionUID。</li></ul><p>⑦ <strong>Java有很多基础类已经实现了serializable接口，比如String,Vector等</strong>。但是也有一些没有实现serializable接口的；</p><p>⑧ <strong>如果一个对象的成员变量是一个对象，那么这个对象的数据成员也会被保存！</strong>这是能用序列化解决深拷贝的重要原因；</p><p>注意：浅拷贝请使用Clone接口的原型模式。</p><h3 id="四、serialversionUID变量"><a href="#四、serialversionUID变量" class="headerlink" title="四、serialversionUID变量"></a>四、serialversionUID变量</h3><h4 id="1、serialversionUID定义及使用"><a href="#1、serialversionUID定义及使用" class="headerlink" title="1、serialversionUID定义及使用"></a>1、serialversionUID定义及使用</h4><p>如果我们没有给一个添加了Serializable的类添加serialversionUID的话，运行的时候会自动添加。</p><p>serialVersionUID是用来辅助对象的序列化与反序列化的，原则上序列化后的数据当中的serialVersionUID与当前类当中的serialVersionUID一致，那么该对象才能被反序列化成功。这个serialVersionUID的详细的工作机制是：在序列化的时候系统将serialVersionUID写入到序列化的文件中去，<strong>当反序列化的时候系统会先去检测程序中的serialVersionUID是否跟当前的文件的serialVersionUID是否一致</strong>，如果一直则反序列化成功，否则就说明当前类跟序列化后的类发生了变化，比如是成员变量的数量或者是类型发生了变化，那么在反序列化时就会发生crash，并且回报出错误。</p><h4 id="2、默认serialVersionUID及可能发生的错误"><a href="#2、默认serialVersionUID及可能发生的错误" class="headerlink" title="2、默认serialVersionUID及可能发生的错误"></a>2、默认serialVersionUID及可能发生的错误</h4><p>但是强烈建议用户自定义一个serialVersionUID,因为默认的serialVersinUID对于class的细节非常敏感，反序列化时可能会导致InvalidClassException这个异常。</p><p>eg：当我们创建了一个对象，并将其序列化后，再修改该对象的属性，这时对象对应的serialversionUID也会发生变化，而在反序列化的时候检测到序列化内容与对象serialversionUID不同，就无法进行反序列化进程。</p><h3 id="五、常见的序列化协议"><a href="#五、常见的序列化协议" class="headerlink" title="五、常见的序列化协议"></a>五、常见的序列化协议</h3><p>上面的内容是关于Java序列化的内容，是通过实现 Serializable / Externalizable 接口来实现序列化/反序列化的。</p><p>但其存在一些问题：</p><ul><li>非跨语言：Java默认方式生成的序列化二进制串，是无法使用其他语言对其进行反序列化的；</li><li>码流过大：默认的方式生成的序列化二进制串，相比于其他的序列化协议更大；</li><li>效率低：使用阻塞式同步IO的方式，生成序列化二进制串的效率低；</li></ul><p>还有其他的一些序列化协议，<a href="https://code.google.com/p/thrift-protobuf-compare/wiki/Benchmarking中给出了一些序列化协议的量化对比：" target="_blank" rel="noopener">https://code.google.com/p/thrift-protobuf-compare/wiki/Benchmarking中给出了一些序列化协议的量化对比：</a></p><p>​    <img src="https://awps-assets.meituan.net/mit-x/blog-images-bundle-2015/f615deb9.png" alt="img"></p><p><img src="https://awps-assets.meituan.net/mit-x/blog-images-bundle-2015/37cf0654.png" alt="img"></p><p><a href="https://tech.meituan.com/2015/02/26/serialization-vs-deserialization.html中给出了相关的结论以及选型建议，由于我并没有使用相关的协议，没有自己的理解，故就不好意思放在这里。" target="_blank" rel="noopener">https://tech.meituan.com/2015/02/26/serialization-vs-deserialization.html中给出了相关的结论以及选型建议，由于我并没有使用相关的协议，没有自己的理解，故就不好意思放在这里。</a></p><p>参考文献1中给出了一些协议的详细解释，这里只列出部分协议名，之后如果深入学习相关内容之后再添加相关内容（未完待续）：</p><h4 id="1、XML-amp-SOAP"><a href="#1、XML-amp-SOAP" class="headerlink" title="1、XML&amp;SOAP"></a>1、XML&amp;SOAP</h4><h4 id="2、JSON"><a href="#2、JSON" class="headerlink" title="2、JSON"></a>2、JSON</h4><h4 id="3、Thrift"><a href="#3、Thrift" class="headerlink" title="3、Thrift"></a>3、Thrift</h4><h4 id="4、Protobuf"><a href="#4、Protobuf" class="headerlink" title="4、Protobuf"></a>4、Protobuf</h4><h4 id="5、Avro"><a href="#5、Avro" class="headerlink" title="5、Avro"></a>5、Avro</h4><h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><ol><li><a href="https://tech.meituan.com/2015/02/26/serialization-vs-deserialization.html" target="_blank" rel="noopener">https://tech.meituan.com/2015/02/26/serialization-vs-deserialization.html</a></li><li><a href="https://blog.csdn.net/baiye_xing/article/details/73249819" target="_blank" rel="noopener">https://blog.csdn.net/baiye_xing/article/details/73249819</a></li><li><a href="http://www.blogjava.net/jiangshachina/archive/2012/02/13/369898.html" target="_blank" rel="noopener">http://www.blogjava.net/jiangshachina/archive/2012/02/13/369898.html</a></li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> basic </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 序列化/反序列化 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>circulardependency</title>
       <link href="/2020/09/17/circulardependency/"/>
       <url>/2020/09/17/circulardependency/</url>
@@ -38,16 +63,16 @@
       
       <categories>
           
-          <category> Proxy </category>
+          <category> Python </category>
+          
+          <category> WebSpider </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> python </tag>
-            
-            <tag> WebSpider </tag>
+            <tag> Proxy </tag>
             
         </tags>
       
@@ -219,7 +244,7 @@
       
       <categories>
           
-          <category> python </category>
+          <category> Python </category>
           
           <category> Django </category>
           
@@ -321,7 +346,7 @@
       
       <categories>
           
-          <category> python </category>
+          <category> Python </category>
           
           <category> Django </category>
           
@@ -348,7 +373,7 @@
       
       <categories>
           
-          <category> python </category>
+          <category> Python </category>
           
           <category> Django </category>
           
@@ -375,7 +400,7 @@
       
       <categories>
           
-          <category> python </category>
+          <category> Python </category>
           
           <category> Django </category>
           
@@ -402,7 +427,7 @@
       
       <categories>
           
-          <category> python </category>
+          <category> Python </category>
           
           <category> Django </category>
           
