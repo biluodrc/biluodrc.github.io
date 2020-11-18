@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>&#39;newswap&#39;</title>
+      <link href="/2020/11/18/newswap/"/>
+      <url>/2020/11/18/newswap/</url>
+      
+        <content type="html"><![CDATA[<h3 id="一、知识回顾"><a href="#一、知识回顾" class="headerlink" title="一、知识回顾"></a>一、知识回顾</h3><p>我们从刚开始接触编程的时候，就学过这样的一个例子（c语言，a b为变量名）：</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> tem = a;</span><br><span class="line">a = b;</span><br><span class="line">b = tem;</span><br></pre></td></tr></table></figure><p>后面的三行代码对于每一个编程人来讲应该是再熟悉不过，他完成了交换两个变量值的功能，同时我们也知道，这样的写法是大错特错：</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a = b;</span><br><span class="line">b = a;</span><br></pre></td></tr></table></figure><p>错误的原因是变量名的交换实际上是两块空间中对应内容的交换，直接进行赋值，会使被赋值对象的内容被覆盖，从而导致变量交换的失败。</p><h3 id="二、神奇魔法"><a href="#二、神奇魔法" class="headerlink" title="二、神奇魔法"></a>二、神奇魔法</h3><p>Python有一种神奇的变量交换的代码方式：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a, b = b, a</span><br></pre></td></tr></table></figure><p>短短的一条语句，就能够实现变量交换的功能。</p><p>实际上，这行代码使用的是<strong>元组拆分</strong>的语法。元组拆包是指将元组中的元素赋值给左值中的多个变量。</p><p>这行代码的右值实际上生成的是一个元组<code>(b,a)</code>，元组自然也就可以完成元组拆分的平行赋值形式。</p><h3 id="三、运行实质"><a href="#三、运行实质" class="headerlink" title="三、运行实质"></a>三、运行实质</h3><p>想要探索代码的实际运行内容，需要深入到字节码当中，Python 主要使用的是<code>CPython</code>进行编译运行，我们可以通过<code>dis</code>库获得对应的字节码：</p><p><img src="https://i.loli.net/2020/11/19/jkBbR4PlcQwXnxi.png" alt="image.png"></p><p>上图中的大部分内容还是比较容易看懂的，主要的问题在于<code>ROT_TWO</code>这条指令我并不明白是在做什么。查阅资料之后发现前人已经做过这部分内容的介绍（<a href="https://www.zhihu.com/question/275696055/answer/391226221" target="_blank" rel="noopener">python交换两个数？ - 知乎</a>）</p><p>结合答主对<code>ceval.c</code>文件的分析，我们不难发现，实际上<code>ROT_TWO</code>完成的工作是将两个变量（对应的实际数据保存在栈顶和栈顶下一位）实际对应的指针保存到临时指针<code>top</code>、<code>second</code>中，然后将栈顶两个指针重新指向<code>second</code>和<code>top</code>。</p><p><img src="https://pic2.zhimg.com/80/v2-dd1728bf8ac322438efa062f7c8c7ca7_1440w.jpg?source=1940ef5c" alt="img"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Python </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> basic </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>lambdaExpression</title>
       <link href="/2020/11/08/lambdaExpression/"/>
       <url>/2020/11/08/lambdaExpression/</url>
